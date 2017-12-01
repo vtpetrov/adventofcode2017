@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class InputLoader {
 
     private static String INPUT_FILE_NAME = "dummy";
-    static Path inputFile;
-    static Scanner mainIn;
+    private static Path inputFile;
+    private static Scanner mainIn;
 
     public static void loadInput(String fileName) {
 
@@ -28,6 +28,10 @@ public class InputLoader {
 
     public static Scanner getMainIn(){
         return mainIn;
+    }
+
+    public static void closeInput() {
+        mainIn.close();
     }
 
 }
