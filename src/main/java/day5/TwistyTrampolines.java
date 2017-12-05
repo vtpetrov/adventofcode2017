@@ -7,12 +7,15 @@ import static helper.InputLoader.*;
 public class TwistyTrampolines {
 
     private static final String INPUT_FILE_NAME = "day5_input.txt";
+    private static final int BOUNDARY = 3;
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");
 
         System.out.println("    ---=== Day 5 ===---     ");
+        System.out.println("\n    ---=== Part 1 ===---     ");
         partOne();
+        System.out.println("\n    ---=== Part 2 ===---     ");
         partTwo();
 
     }
@@ -20,34 +23,21 @@ public class TwistyTrampolines {
     private static void partOne() {
         loadInput(INPUT_FILE_NAME);
         int l = 0;
-        int[] hops = new int[1070];
-        int hop = 0;
+        int[] inputArray = new int[1070];
+        int hops;
 
 
         while (getMainIn().hasNextLine()) {
-            hops[l] = Integer.valueOf(getMainIn().nextLine());
+            inputArray[l] = Integer.valueOf(getMainIn().nextLine());
             l++;
         }
-        System.out.println("Initial state= " + Arrays.toString(hops));
+        System.out.println("Initial state= " + Arrays.toString(inputArray));
 
-        boolean found = false;
-        int i = 0;
-        int currentElem = 0;
-        do {
-            try {
-                currentElem = hops[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                found = true;
-                continue;
-            }
-            hops[i]++;
-            i += currentElem;
-            hop++;
-        } while (!found);
+        hops = calculateHops(inputArray, false);
 
-        System.out.println("Final state= " + Arrays.toString(hops));
+        System.out.println("Final state= " + Arrays.toString(inputArray));
 
-        System.out.println("\nPart 1 solution:  hops to exit= " + hop);
+        System.out.println("Part 1 solution:  hops to exit= " + hops);
 
         closeInput();
 
@@ -55,5 +45,52 @@ public class TwistyTrampolines {
 
     private static void partTwo() {
 
+        loadInput(INPUT_FILE_NAME);
+        int l = 0;
+        int[] input = new int[1070];
+        int hops;
+
+
+        while (getMainIn().hasNextLine()) {
+            input[l] = Integer.valueOf(getMainIn().nextLine());
+            l++;
+        }
+        System.out.println("2 Initial state= " + Arrays.toString(input));
+
+        hops = calculateHops(input, true);
+
+        System.out.println("2 Final state= " + Arrays.toString(input));
+
+        System.out.println("Part 2 solution:  hops to exit= " + hops);
+
+        closeInput();
     }
+
+    private static int calculateHops(int[] elems, boolean enableDiffOffsetIncrement) {
+
+        boolean found = false;
+        int i = 0;
+        int offset;
+        int result = 0;
+        do {
+            try {
+                offset = elems[i];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                found = true;
+                continue;
+            }
+
+            if (enableDiffOffsetIncrement && offset >= BOUNDARY) {
+                elems[i]--;
+            } else {
+                elems[i]++;
+            }
+
+            i += offset;
+            result++;
+        } while (!found);
+
+        return result;
+    }
+
 }
