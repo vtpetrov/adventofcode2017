@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class Towers {
 
     List<Tower> towers = new ArrayList<>();
@@ -17,10 +18,6 @@ public class Towers {
 
     public List<Tower> getTowers() {
         return towers;
-    }
-
-    public void setTowers(List<Tower> towers) {
-        this.towers = towers;
     }
 
     public void addTower(Tower t) {
@@ -47,9 +44,33 @@ public class Towers {
         return towers.stream().map(Tower::getWeight).collect(Collectors.toList());
     }
 
-    public Boolean isHold(String name) {
+    public static void calculateStackWeight(Tower towerInput) {
 
-        return null;
+        System.out.println();
+        System.out.print(towerInput.getName() + " | ");
+        if (towerInput.getStackWeight() == 0L) {
+
+            Long stackWeight = 0L;
+
+            if (null == towerInput.getHoldingTowers()) { // if program doesn't hold other programs it's stack weight is 0:
+                towerInput.setStackWeight(0L);
+                System.out.print(towerInput.getWeight() + " || ");
+                //                stackWeight += new Long(current.getWeight());
+            } else {
+                System.out.print(towerInput.getHoldingTowers().stream().map(Tower::getName).collect(Collectors.toList()) + " " +
+                        "|||" +
+                        " ");
+                for (Tower t : towerInput.getHoldingTowers()) {
+                    calculateStackWeight(t);
+                    stackWeight += t.getWeight() + t.getStackWeight();
+                }
+                towerInput.setStackWeight(stackWeight);
+
+            }
+
+            System.out.println("[" + towerInput.getName() + "] stackWeight = " + stackWeight);
+
+        }
     }
 
     public List<Tower> getTowersHolding(boolean holding) {
@@ -57,7 +78,7 @@ public class Towers {
         List<Tower> towerList = new ArrayList<>();
 
         for (Tower entry : towers) {
-            boolean isHolding = entry.getHoldingTowers() != null;
+            boolean isHolding = entry.getHoldingTowersAsStringNames() != null;
 
             if (isHolding == holding) {
                 towerList.add(entry);
@@ -76,8 +97,8 @@ public class Towers {
             boolean isBenigHold = false;
 
             for (Tower checkHolding : this.towers) {
-                if (checkHolding.getHoldingTowers() != null) {
-                    if (checkHolding.getHoldingTowers().contains(checkSelf.getName())) {
+                if (checkHolding.getHoldingTowersAsStringNames() != null) {
+                    if (checkHolding.getHoldingTowersAsStringNames().contains(checkSelf.getName())) {
 
                         isBenigHold = true;
 
@@ -98,6 +119,15 @@ public class Towers {
         return listToReturn;
     }
 
+    public void populateHoldedTowers() {
+        for (Tower current : this.towers) {
+            if (current.getHoldingTowersAsStringNames() != null) {
+                for (String holdedTowerName : current.getHoldingTowersAsStringNames()) {
+                    current.addHoldingTower(this.getTower(holdedTowerName));
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {

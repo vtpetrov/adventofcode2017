@@ -7,22 +7,19 @@ import static helper.InputLoader.*;
 
 public class RecursiveCircus {
 
-    private static final String INPUT_FILE_NAME = "day7_input.txt";
-    //    private static final String INPUT_FILE_NAME = "debug.txt";
+    //    private static final String INPUT_FILE_NAME = "day7_input.txt";
+    private static final String INPUT_FILE_NAME = "debug.txt";
     private static Towers towers = new Towers();
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
-
         System.out.println("    ---=== Day 7 ===---     ");
         System.out.println("\n    ---=== Part 1 ===---     ");
-        partOne();
+//        partOne();
         System.out.println("\n    ---=== Part 2 ===---     ");
-
         partTwo();
-
         long end = new Date().getTime();
         System.out.println("\n:::END = " + end);
         System.out.println("Duration: " + (end - start) + " milliseconds");
@@ -58,8 +55,25 @@ public class RecursiveCircus {
      */
     private static void partTwo() {
 
+        loadInput(INPUT_FILE_NAME);
+
+        while (getMainIn().hasNextLine()) {
+            towers.addTower(new Tower(getMainIn().nextLine()));
+        }
+
+        towers.populateHoldedTowers();
+
+        Towers holdingTowers = new Towers(towers.getTowersHolding(true));
+
+        for (Tower t : holdingTowers.getTowers()) {
+
+            Towers.calculateStackWeight(t);
+        }
+
+
+//        System.out.println("\nAFTER  holdingTowers = \n" + holdingTowers);
+
+        System.out.println("holdingTowers.getTower(\"tknk\") = " + holdingTowers.getTower("tknk"));
+
     }
-
-
-
 }
