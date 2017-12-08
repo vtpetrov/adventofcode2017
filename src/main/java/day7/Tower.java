@@ -71,7 +71,7 @@ public class Tower {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("\nTower{");
+        final StringBuffer sb = new StringBuffer("Tower{");
         sb.append("name='").append(name).append('\'');
         sb.append(", weight=").append(weight);
         sb.append(", holdingTowers=").append(holdingTowers);

@@ -1,15 +1,15 @@
 package day7;
 
 import java.util.Date;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import static helper.InputLoader.*;
 
 public class RecursiveCircus {
 
-    //    private static final String INPUT_FILE_NAME = "day7_input.txt";
-    private static final String INPUT_FILE_NAME = "debug.txt";
-    private static Towers towers;
+    private static final String INPUT_FILE_NAME = "day7_input.txt";
+    //    private static final String INPUT_FILE_NAME = "debug.txt";
+    private static Towers towers = new Towers();
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");
@@ -38,24 +38,24 @@ public class RecursiveCircus {
         while (getMainIn().hasNextLine()) {
             towers.addTower(new Tower(getMainIn().nextLine()));
         }
-        System.out.println("[" + towers.getTowers().size() + "] towers added:");
-        System.out.println("towers = " + towers);
 
-        List<Tower> holding = towers.getTowersHolding(true);
-//        List<Tower> beingHold = towers.getTowers(holding, true, true);
-//        List<Tower> notBeingHold = towers.getTowers(holding, true, false);
+        Towers holdingTowers = new Towers(towers.getTowersHolding(true));
+        Towers notHoldedTowers = new Towers(holdingTowers.getTowersBeingHold(false));
 
-
-//        holding.retainAll(notBeingHold);
-
-        System.out.println("holding = " + holding.size());
-
-//        System.out.println("Part 2 solution:  hops to exit= " + hops);
+        if (notHoldedTowers.getTowers().size() != 1) {
+            throw new Error("Invalid input: more than one bottom program!:\n" + notHoldedTowers);
+        } else {
+            System.out.println("\nPart 1 solution:  bottom program name= " + notHoldedTowers.getTowers().stream().map
+                    (Tower::getName).collect(Collectors.toList()));
+        }
 
         closeInput();
 
     }
 
+    /**
+     * Given that exactly one program is the wrong weight, what would its weight need to be to balance the entire tower?
+     */
     private static void partTwo() {
 
     }

@@ -30,7 +30,7 @@ public class Towers {
     public Tower getTower(String name) {
 
         for (Tower t : towers) {
-            if (t.getName().equals("name")) {
+            if (t.getName().equals(name)) {
                 return towers.get(towers.indexOf(t));
             }
         }
@@ -67,29 +67,33 @@ public class Towers {
         return towerList;
     }
 
-//    ktlj (57)
-//    fwft (72) -> ktlj, cntj, xhth
-//    qoyq (66)
-//    tknk (41) -> ugml, padx, fwft
-
     public List<Tower> getTowersBeingHold(boolean beingHold) {
 
         List<Tower> listToReturn = new ArrayList<>();
 
-        for (Tower entry : this.towers) {
+        for (Tower checkSelf : this.towers) {
 
-            if (entry.getHoldingTowers() != null) {
-                entry.getHoldingTowers().stream().forEach(holdedTowerName -> {
+            boolean isBenigHold = false;
 
-                    boolean isBenigHold = this.getNames().contains(holdedTowerName);
+            for (Tower checkHolding : this.towers) {
+                if (checkHolding.getHoldingTowers() != null) {
+                    if (checkHolding.getHoldingTowers().contains(checkSelf.getName())) {
 
-                    if (isBenigHold == beingHold) {
-                        listToReturn.add(this.getTower(holdedTowerName));
+                        isBenigHold = true;
+
                     }
-                });
+                }
             }
 
+            if (beingHold == isBenigHold) { // result match what we want - holded OR not holded
+
+                listToReturn.add(checkSelf);
+            }
+
+
         }
+
+//        System.out.println("FIN:  listToReturn = " + listToReturn.stream().map(Tower::getName).collect(Collectors.toList()));
 
         return listToReturn;
     }
