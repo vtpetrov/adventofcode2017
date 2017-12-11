@@ -16,7 +16,7 @@ public class RecursiveCircus {
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
         System.out.println("    ---=== Day 7 ===---     ");
-        System.out.println("\n    ---=== Part 1 ===---     ");
+//        System.out.println("\n    ---=== Part 1 ===---     ");
 //        partOne();
         System.out.println("\n    ---=== Part 2 ===---     ");
         partTwo();
@@ -66,14 +66,20 @@ public class RecursiveCircus {
         Towers holdingTowers = new Towers(towers.getTowersHolding(true));
 
         for (Tower t : holdingTowers.getTowers()) {
+            System.out.println("\n- t = " + t);
 
             Towers.calculateStackWeight(t);
         }
 
+        System.out.println("\nMAIN holdingTowers.getTower(\"tknk\"): \n" + holdingTowers.getTower("tknk").getStackWeight());
 
-//        System.out.println("\nAFTER  holdingTowers = \n" + holdingTowers);
+        holdingTowers.findInbalancedDisks();
 
-        System.out.println("holdingTowers.getTower(\"tknk\") = " + holdingTowers.getTower("tknk"));
+        System.out.println("Towers.imbalancedHolder = " + Towers.imbalancedHolder.getName());
+        System.out.println("\nTowers.imbalancedPrograms = " + Towers.imbalancedPrograms.stream().map(Tower::getName).collect
+                (Collectors.toList()));
+
+        Towers.calcBalancingValue();
 
     }
 }
