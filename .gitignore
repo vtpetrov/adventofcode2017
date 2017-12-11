@@ -3,4 +3,3 @@
 src/main/resources/debug*.txt
 src/test/
 target/
-/_config.yml
