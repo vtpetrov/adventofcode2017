@@ -1,8 +1,9 @@
 package day7;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -11,7 +12,8 @@ public class Towers {
     List<Tower> towers = new ArrayList<>();
     public static Tower imbalancedHolder;
     public static List<Tower> imbalancedPrograms;
-    public static long[] imbalancedProgramWeights;
+    public static Tower wrongProgram;
+    public static Tower refProgram;
     static int count = 0;
 
 
@@ -53,19 +55,13 @@ public class Towers {
     public static void calculateStackWeight(Tower towerInput) {
         count++;
         System.out.println("\n--- count= " + count + "\n");
-        System.out.print(towerInput.getName() + " 1| ");
         if (towerInput.getStackWeight() == 0L) {
 
             Long stackWeight = 0L;
 
             if (null == towerInput.getHoldingTowers()) { // if program doesn't hold other programs it's stack weight is 0:
                 towerInput.setStackWeight(0L);
-                System.out.print(towerInput.getWeight() + " 2|| ");
             } else {
-                System.out.println("    - : " + towerInput + " Dyrji kuli, rekursiq");
-                System.out.print(towerInput.getHoldingTowers().stream().map(Tower::getName).collect(Collectors.toList()) + " " +
-                        "3|||" +
-                        " ");
                 for (Tower t : towerInput.getHoldingTowers()) {
                     calculateStackWeight(t);
                     stackWeight += t.getWeight() + t.getStackWeight();
@@ -75,9 +71,8 @@ public class Towers {
             }
 
             System.out.println("[" + towerInput.getName() + "] stackWeight = " + stackWeight);
+            towerInput.setTotalWeight(towerInput.getWeight() + towerInput.getStackWeight());
 
-        } else {
-            System.out.println(" Veche e klkulirana... : " + towerInput.getStackWeight());
         }
     }
 
@@ -146,12 +141,58 @@ public class Towers {
 
     public static int calcBalancingValue() {
 
+        System.out.println("\n - Balancing programs.... ");
+        System.out.println("    [" + imbalancedPrograms.stream().map(Tower::getName).collect(Collectors.toList()) + "]");
+        System.out.println("    [" + imbalancedPrograms.stream().map(Tower::getWeight).collect(Collectors.toList()) + "]");
+        System.out.println("    [" + imbalancedPrograms.stream().map(Tower::getStackWeight).collect(Collectors.toList()) + "]");
+
+        Map<Long, Integer> weightCounts = new HashMap<>();
+
+        for (int i = 0; i < imbalancedPrograms.size(); i++) {
+            Tower curr = imbalancedPrograms.get(i);
+            long currTotal = curr.getWeight() + curr.getStackWeight();
+            System.out.println(curr.getName() + ": " + "weight= '" + curr.getWeight() + "', stackWeight= '" + curr
+                    .getStackWeight() + "' ; TOTAL: " + currTotal);
+            if (weightCounts.containsKey(currTotal)) { // increase occurrences by 1:
+                weightCounts.put(currTotal, weightCounts.get(currTotal) + 1);
+            } else {
+                weightCounts.put(currTotal, 1);
+            }
+        }
+
+        for (Map.Entry<Long, Integer> test : weightCounts.entrySet()) {
+            if (test.getValue().equals(1)) {
+                System.out.println(" [!] imbalanced weight : " + test.getKey());
+                for (int j = 0; j < imbalancedPrograms.size(); j++) {
+                    Tower obj = imbalancedPrograms.get(j);
+                    if (obj.getTotalWeight().equals(test.getKey())) {
+                        wrongProgram = obj;
+                        refProgram = imbalancedPrograms.get(j + 1 % imbalancedPrograms.size());
+
+                        System.out.println(String.format("Wrong program: name=%s, weight=%s, total=%s", wrongProgram.getName(),
+                                wrongProgram.getWeight(), wrongProgram.getTotalWeight()));
+                        System.out.println(String.format("REF program: name=%s, weight=%s, total=%s", refProgram.getName(),
+                                refProgram.getWeight(), refProgram.getTotalWeight()));
+
+                    }
+                }
+                break;
+            }
+        }
+
+        long diff = wrongProgram.getTotalWeight() - refProgram.getTotalWeight();
+        System.out.println("diff = " + diff);
+
+        // balance the wrong program:
+        System.out.println("OLD program weight = " + wrongProgram.getWeight());
+        long correctWeight = wrongProgram.getWeight() - diff;
+        System.out.println("NEW program weight = [" + correctWeight + "]");
+
+
         return 0;
     }
 
     public void findInbalancedDisks() {
-        // holder
-        // pgograms
 
         totalka:
         for (Tower current : this.getTowers()) {
@@ -163,25 +204,15 @@ public class Towers {
                 weights = new long[current.getHoldingTowers().size()];
                 int i = 0;
                 for (Tower h : current.getHoldingTowers()) {
-                    System.out.println("        h.getName() = " + h.getName());
                     weights[i] = h.getWeight() + h.getStackWeight();
-
-                    System.out.print("        h.getWeight(): '" + h.getWeight());
-                    System.out.print("' + h.getStackWeight(): '" + h.getStackWeight());
-                    System.out.println("' = weights[i]: '" + weights[i]);
-                    System.out.println("'");
                     i++;
                 }
-                System.out.println("Arrays.toString(weights) = " + Arrays.toString(weights));
 
                 long curr;
                 for (int j = 0; j < weights.length - 1; j++) {
                     curr = weights[j];
-                    System.out.println("j = " + j);
-                    System.out.println("curr = " + curr);
-                    if (weights[j + 1] != curr) {
-                        System.out.println("weights[j + 1] = " + weights[j + 1]);
 
+                    if (weights[j + 1] != curr) {
                         imbalancedHolder = current;
                         imbalancedPrograms = current.getHoldingTowers();
                         break totalka;
@@ -191,6 +222,7 @@ public class Towers {
             }
 
         }
+
 
     }
 }

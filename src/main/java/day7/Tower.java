@@ -11,6 +11,8 @@ public class Tower {
     private List<String> holdingTowersAsStringNames;
     private List<Tower> holdingTowers;
     private Long stackWeight = 0L;
+    private Long totalWeight = 0L; // weight + stackWeight
+
 
     public Tower() {
 
@@ -87,6 +89,14 @@ public class Tower {
         this.holdingTowers = holdingTowers;
     }
 
+    public Long getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(Long totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
     public void addHoldingTower(Tower towerToAdd) {
         if (this.holdingTowers == null) {
             this.holdingTowers = new ArrayList<>();
@@ -118,6 +128,7 @@ public class Tower {
         sb.append(", holdingTowersAsStringNames=").append(holdingTowersAsStringNames);
         sb.append(", holdingTowers=").append(holdingTowers);
         sb.append(", stackWeight=").append(stackWeight);
+        sb.append(", totalWeight=").append(totalWeight);
         sb.append("}\n");
         return sb.toString();
     }

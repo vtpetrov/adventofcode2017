@@ -7,8 +7,8 @@ import static helper.InputLoader.*;
 
 public class RecursiveCircus {
 
-    //    private static final String INPUT_FILE_NAME = "day7_input.txt";
-    private static final String INPUT_FILE_NAME = "debug.txt";
+    private static final String INPUT_FILE_NAME = "day7_input.txt";
+    //    private static final String INPUT_FILE_NAME = "debug.txt";
     private static Towers towers = new Towers();
 
     public static void main(String[] args) throws Throwable {
@@ -66,12 +66,8 @@ public class RecursiveCircus {
         Towers holdingTowers = new Towers(towers.getTowersHolding(true));
 
         for (Tower t : holdingTowers.getTowers()) {
-            System.out.println("\n- t = " + t);
-
             Towers.calculateStackWeight(t);
         }
-
-        System.out.println("\nMAIN holdingTowers.getTower(\"tknk\"): \n" + holdingTowers.getTower("tknk").getStackWeight());
 
         holdingTowers.findInbalancedDisks();
 
