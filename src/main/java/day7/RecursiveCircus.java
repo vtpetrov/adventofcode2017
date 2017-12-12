@@ -1,5 +1,8 @@
 package day7;
 
+import common.Program;
+import common.Programs;
+
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -9,7 +12,7 @@ public class RecursiveCircus {
 
     private static final String INPUT_FILE_NAME = "day7_input.txt";
     //    private static final String INPUT_FILE_NAME = "debug.txt";
-    private static Towers towers = new Towers();
+    private static Programs programs = new Programs();
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");
@@ -33,17 +36,17 @@ public class RecursiveCircus {
         loadInput(INPUT_FILE_NAME);
 
         while (getMainIn().hasNextLine()) {
-            towers.addTower(new Tower(getMainIn().nextLine()));
+            programs.addProgram(new Program(getMainIn().nextLine()));
         }
 
-        Towers holdingTowers = new Towers(towers.getTowersHolding(true));
-        Towers notHoldedTowers = new Towers(holdingTowers.getTowersBeingHold(false));
+        Programs holdingPrograms = new Programs(programs.getTowersHolding(true));
+        Programs notHoldedPrograms = new Programs(holdingPrograms.getTowersBeingHold(false));
 
-        if (notHoldedTowers.getTowers().size() != 1) {
-            throw new Error("Invalid input: more than one bottom program!:\n" + notHoldedTowers);
+        if (notHoldedPrograms.getPrograms().size() != 1) {
+            throw new Error("Invalid input: more than one bottom program!:\n" + notHoldedPrograms);
         } else {
-            System.out.println("\nPart 1 solution:  bottom program name= " + notHoldedTowers.getTowers().stream().map
-                    (Tower::getName).collect(Collectors.toList()));
+            System.out.println("\nPart 1 solution:  bottom program name= " + notHoldedPrograms.getPrograms().stream().map
+                    (Program::getName).collect(Collectors.toList()));
         }
 
         closeInput();
@@ -58,24 +61,24 @@ public class RecursiveCircus {
         loadInput(INPUT_FILE_NAME);
 
         while (getMainIn().hasNextLine()) {
-            towers.addTower(new Tower(getMainIn().nextLine()));
+            programs.addProgram(new Program(getMainIn().nextLine()));
         }
 
-        towers.populateHoldedTowers();
+        programs.populateHoldedTowers();
 
-        Towers holdingTowers = new Towers(towers.getTowersHolding(true));
+        Programs holdingPrograms = new Programs(programs.getTowersHolding(true));
 
-        for (Tower t : holdingTowers.getTowers()) {
-            Towers.calculateStackWeight(t);
+        for (Program t : holdingPrograms.getPrograms()) {
+            Programs.calculateStackWeight(t);
         }
 
-        holdingTowers.findInbalancedDisks();
+        holdingPrograms.findInbalancedDisks();
 
-        System.out.println("Towers.imbalancedHolder = " + Towers.imbalancedHolder.getName());
-        System.out.println("\nTowers.imbalancedPrograms = " + Towers.imbalancedPrograms.stream().map(Tower::getName).collect
+        System.out.println("Programs.imbalancedHolderDay7 = " + Programs.imbalancedHolderDay7.getName());
+        System.out.println("\nPrograms.imbalancedProgramsDay7 = " + Programs.imbalancedProgramsDay7.stream().map(Program::getName).collect
                 (Collectors.toList()));
 
-        Towers.calcBalancingValue();
+        Programs.calcBalancingValue();
 
     }
 }
