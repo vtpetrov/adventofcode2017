@@ -10,17 +10,15 @@ public class Program {
 
 
     private static final int TO_STRING_DAY = 12;
-    public Boolean communicatesWithZero = null;
+
     private String name;
     private Integer weight;
     private List<String> holdingTowersAsStringNames;
-    public Boolean traversed = false;
     private Long stackWeight = 0L;
     private Long totalWeight = 0L; // weight + stackWeight
     private int id;
     private List<Program> holdingPrograms;
     private ArrayList<Integer> communicatesWithIDs = new ArrayList<>();
-
 
     public Program() {
 
@@ -55,12 +53,6 @@ public class Program {
 
             for (String elem : inputFromFile.substring(inputFromFile.indexOf(">") + 2).split(", ")) {
                 this.communicatesWithIDs.add(Integer.valueOf(elem));
-                if (this.getId() == 0 || Integer.valueOf(elem) == 0) {
-                    this.communicatesWithZero = true;
-                    this.traversed = true;
-                    System.out.println("SETTING 'communicatesWithZero to TRUE-> " + this.getId() + ", " + elem);
-
-                }
             }
         } else if (inputFromFile.contains("->")) {
             // holding programs:
@@ -70,21 +62,6 @@ public class Program {
         }
 
     }
-
-//    0 <-> 2
-//    1 <-> 1
-//    2 <-> 0, 3, 4
-//    3 <-> 2, 4
-//    4 <-> 2, 3, 6
-//    5 <-> 6
-//    6 <-> 4, 5
-//
-//    dihjv (2158) -> gausx, ncdmp, hozgrub
-//    qhvca (428) -> odttvb, ymehff, ymyzbqc, jtdtmsi, wciuyuh
-//    kuvqhnm (77)
-//    eauol (56)
-//    nwtkz (304) -> eykks, rxivjye
-
 
     public static Program fromStringName(String name) {
         Program toReturn = new Program();
@@ -132,10 +109,6 @@ public class Program {
         return holdingTowersAsStringNames;
     }
 
-    public void setHoldingTowersAsStringNames(List<String> holdingTowersAsStringNames) {
-        this.holdingTowersAsStringNames = holdingTowersAsStringNames;
-    }
-
     public Long getStackWeight() {
         return stackWeight;
     }
@@ -146,10 +119,6 @@ public class Program {
 
     public List<Program> getHoldingPrograms() {
         return holdingPrograms;
-    }
-
-    public void setHoldingPrograms(List<Program> holdingPrograms) {
-        this.holdingPrograms = holdingPrograms;
     }
 
     public Long getTotalWeight() {
@@ -169,63 +138,12 @@ public class Program {
         }
     }
 
-    @Deprecated
-    public void addCommunicatingProgram(Program programToAdd) {
-//        System.out.println("DEBUG addCommunicatingProgram:      ADDING new programm to the list of communicating programs: id= " + programToAdd.getId());
-//        if (this.communicatesWith == null) {
-//            System.out.println("DEBUG   : creating new 'communicatesWith' ArrayList instance");
-//            this.communicatesWith = new ArrayList<>();
-//            System.out.println("(addCommunicatingProgram)_ communicatesWith  BEFORE ADD 1= " + communicatesWith.stream().map(Program::getId).collect
-//                    (Collectors.toList()));
-//            communicatesWith.add(programToAdd);
-//            System.out.println("(addCommunicatingProgram)_communicatesWith  AFTER ADD 1= " + communicatesWith.stream().map(Program::getId).collect
-//                    (Collectors.toList()));
-//        } else {
-//            System.out.println("(addCommunicatingProgram)_communicatesWith  BEFORE ADD 2= " + communicatesWith.stream().map(Program::getId).collect
-//                    (Collectors.toList()));
-//            communicatesWith.add(programToAdd);
-//            System.out.println("(addCommunicatingProgram)_communicatesWith  AFTER ADD 2= " + communicatesWith.stream().map(Program::getId).collect
-//                    (Collectors.toList()));
-//        }
-    }
-
-    public void calculateDeiscWeight() {
-
-        Long sumDiscWeights = 0L;
-        Long sumDiscStackWeights = 0L;
-
-        if (this.getHoldingPrograms() != null) {
-            for (Program t : this.getHoldingPrograms()) {
-                sumDiscWeights += t.getWeight();
-                sumDiscStackWeights += t.getStackWeight();
-            }
-        }
-
-    }
-
-//    @Override
-//    public String toString() {
-//        return "Program{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", weight=" + weight +
-//                ", holdingTowersAsStringNames=" + holdingTowersAsStringNames +
-//                ", holdingPrograms=" + holdingPrograms +
-//                ", stackWeight=" + stackWeight +
-//                ", totalWeight=" + totalWeight +
-//                ", communicatesWithIDs=" + communicatesWithIDs +
-//                ", communicatesWith=" + communicatesWith +
-//                "}\n";
-//    }
-
     public String toString() {
         switch (TO_STRING_DAY) {
             case 12:
                 return "Program{" +
                         "id=" + id +
                         ", communicatesWithIDs=" + communicatesWithIDs +
-                        ", traversed=" + traversed +
-                        ", communicatesWithZero=" + communicatesWithZero +
                         "}\n";
             default:
                 return "Program{" +

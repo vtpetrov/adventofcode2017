@@ -3,7 +3,10 @@ package day12;
 import common.Program;
 import common.Programs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static helper.InputLoader.getMainIn;
 import static helper.InputLoader.loadInput;
@@ -11,7 +14,7 @@ import static helper.InputLoader.loadInput;
 public class DigitalPlumber {
 
     private static final String INPUT_FILE_NAME = "day12_input.txt";
-    //        private static final String INPUT_FILE_NAME = "debug.txt";
+    //    private static final String INPUT_FILE_NAME = "debug.txt";
     private static Programs programs = new Programs();
 
     public static void main(String[] args) throws Throwable {
@@ -54,21 +57,13 @@ public class DigitalPlumber {
             programs.addProgram(new Program(getMainIn().nextLine()));
         }
 
-        System.out.println("------------");
-        System.out.println(programs.getPrograms());
+        programs.findConnectedToZero();
+        List<Integer> result = new ArrayList<>(programs.getProgramIdsConnectedToZero());
+        Collections.sort(result);
 
-        programs.setAdjacent();
+        System.out.println("result = " + result);
+        System.out.println("count= " + result.size());
 
-        System.out.println("------------");
-        System.out.println(programs.getPrograms());
-
-        /*
-
-        programs.calculateZeroGroupChain();
-
-        int numberOfProgramsInZeroChain = programs.getNumberOfProgramsInZeroGroup();
-        System.out.println("numberOfProgramsInZeroChain = " + numberOfProgramsInZeroChain);
-*/
 
     }
 

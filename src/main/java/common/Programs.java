@@ -1,9 +1,6 @@
 package common;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -15,6 +12,8 @@ public class Programs {
     public static Program wrongProgramDay7;
     public static Program refProgramDay7;
     private List<Program> programs = new ArrayList<>();
+    private Set<Integer> programIdsConnectedToZero = new HashSet<>();
+
     static int count = 0;
 
 
@@ -229,85 +228,39 @@ public class Programs {
 
     }
 
+    private int recursionCount = 0;
+
+    public void findConnectedToZero() {
+        recursionCount = 0;
+        findConnectedToZero(0);
+    }
+
+    private void findConnectedToZero(int caller) {
+        recursionCount++;
+        System.out.println("    recursionCount      = " + recursionCount);
+        System.out.println("            caller           = " + caller);
+
+        programIdsConnectedToZero.add(caller);
+
+        Set<Integer> subIdsConnectedToZero = new HashSet<>();
+        subIdsConnectedToZero.addAll(programs.get(caller).getCommunicatesWithIDs());
+
+        subIdsConnectedToZero.removeAll(programIdsConnectedToZero);
+        programIdsConnectedToZero.addAll(subIdsConnectedToZero);
+
+        for (int sub : subIdsConnectedToZero) {
+            findConnectedToZero(sub);
+        }
+    }
+
+    public Set<Integer> getProgramIdsConnectedToZero() {
+        return programIdsConnectedToZero;
+    }
+
     @Override
     public String toString() {
         return "Programs{" +
                 "programs=" + programs +
                 '}';
-    }
-
-    public void calculateZeroGroupChain() {
-
-        // for all programs:
-        int groupSize = programs.size();
-        for (int i = 0; i < groupSize; i++) {
-            System.out.println("i = " + i);
-            Program outerProgram = programs.get(i);
-
-            if (!outerProgram.traversed || outerProgram.communicatesWithZero == null) {
-                // search
-                determineZeroChainBelonging(outerProgram);
-            } else {
-                // skip
-                continue;
-            }
-
-        }
-
-    }
-
-    private boolean determineZeroChainBelonging(Program self) {
-        // set traversed
-        // set communicatesWithZero
-        boolean result = false;
-
-        if (self.traversed && self.communicatesWithZero == null) {
-            throw new Error("*****************************************************" +
-                    "\nVTP exception - d12: program marked as 'traversed', but " +
-                    "'communicatesWithZero' is NOT " +
-                    "set!! " +
-                    "Details:\n" + self +
-                    "\n******************************************************\n");
-        }
-
-        if (self.traversed) { // if already calculated, return result
-            result = self.communicatesWithZero;
-        } else {
-            for (int subId : self.getCommunicatesWithIDs()) {
-
-                if (self.getId() != subId) {
-
-                    result = determineZeroChainBelonging(programs.get(subId));
-                    if (result) break; // stop looping for this subGroup if we already determined ZeroBelonging.
-                } else {
-                    result = false;
-                }
-            }
-            self.traversed = true;
-            self.communicatesWithZero = result;
-        }
-
-        return result;
-    }
-
-    public int getNumberOfProgramsInZeroGroup() {
-        int count = 0;
-        for (Program p : programs) {
-            if (p.communicatesWithZero) count++;
-        }
-        return count;
-    }
-
-    public void setAdjacent() {
-        for (Program prgrm : programs) {
-            if (prgrm.getCommunicatesWithIDs().contains(0)) {
-                for (int subId : prgrm.getCommunicatesWithIDs()) {
-                    if (subId != 0) {
-                        programs.get(subId).traversed = true;
-                        programs.get(subId).communicatesWithZero = true;
-                    }
-                }
-            }
-        }
     }
 }
