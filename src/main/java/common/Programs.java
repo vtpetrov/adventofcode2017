@@ -276,6 +276,7 @@ public class Programs {
             for (int subId : self.getCommunicatesWithIDs()) {
 
                 if (self.getId() != subId) {
+
                     result = determineZeroChainBelonging(programs.get(subId));
                     if (result) break; // stop looping for this subGroup if we already determined ZeroBelonging.
                 } else {
@@ -295,5 +296,18 @@ public class Programs {
             if (p.communicatesWithZero) count++;
         }
         return count;
+    }
+
+    public void setAdjacent() {
+        for (Program prgrm : programs) {
+            if (prgrm.getCommunicatesWithIDs().contains(0)) {
+                for (int subId : prgrm.getCommunicatesWithIDs()) {
+                    if (subId != 0) {
+                        programs.get(subId).traversed = true;
+                        programs.get(subId).communicatesWithZero = true;
+                    }
+                }
+            }
+        }
     }
 }

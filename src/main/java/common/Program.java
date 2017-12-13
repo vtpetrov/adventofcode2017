@@ -59,6 +59,7 @@ public class Program {
                     this.communicatesWithZero = true;
                     this.traversed = true;
                     System.out.println("SETTING 'communicatesWithZero to TRUE-> " + this.getId() + ", " + elem);
+
                 }
             }
         } else if (inputFromFile.contains("->")) {

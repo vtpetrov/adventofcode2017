@@ -56,7 +56,13 @@ public class DigitalPlumber {
 
         System.out.println("------------");
         System.out.println(programs.getPrograms());
-/*
+
+        programs.setAdjacent();
+
+        System.out.println("------------");
+        System.out.println(programs.getPrograms());
+
+        /*
 
         programs.calculateZeroGroupChain();
 
