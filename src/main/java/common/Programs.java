@@ -14,7 +14,7 @@ public class Programs {
     public static List<Program> imbalancedProgramsDay7;
     public static Program wrongProgramDay7;
     public static Program refProgramDay7;
-    List<Program> programs = new ArrayList<>();
+    private List<Program> programs = new ArrayList<>();
     static int count = 0;
 
 
@@ -196,28 +196,6 @@ public class Programs {
         }
     }
 
-    @Deprecated
-    public void populateCommunicatingPrograms() {
-        for (Program current : this.programs) {
-            if (current.getCommunicatesWithIDs() != null) {
-                for (Integer communicatingWith : current.getCommunicatesWithIDs()) {
-                    System.out.println("DEBUG populateCommunicatingPrograms:  aDD TO =   - " + current.getId() + " -");
-
-                    System.out.println("(populateCommunicatingPrograms) current BEFORE = " + current);
-
-                    if (current.getId() != communicatingWith && !current.communicatesWithZero) {
-                        current.addCommunicatingProgram(this.getProgram(communicatingWith));
-                    } else {
-                        System.out.println("        INFO    :   communicates with self....skipping addition!");
-                    }
-
-//                    System.out.println("(populateCommunicatingPrograms) current AFTER = " + current);
-
-                }
-            }
-        }
-    }
-
     public void findInbalancedDisks() {
 
         totalka:
@@ -258,52 +236,64 @@ public class Programs {
                 '}';
     }
 
-    /**
-     * check if program belongs to Group 0
-     *
-     * @return true if it does and false otherwise
-     */
-    public Boolean isPartOfZeroChain(Program programToCheckForZeroChainApplice, int callerId) {
+    public void calculateZeroGroupChain() {
 
-//        System.out.println(PRINT ? "\nDEBUG                ----=====  " + programToCheckForZeroChainApplice.getId() + "  " +
-//                "=====---" : "");
-        Boolean result = null;
+        // for all programs:
+        int groupSize = programs.size();
+        for (int i = 0; i < groupSize; i++) {
+            System.out.println("i = " + i);
+            Program outerProgram = programs.get(i);
 
-        if (programToCheckForZeroChainApplice.communicatesWithZero == null && !programToCheckForZeroChainApplice.traversed) {
-            if (programToCheckForZeroChainApplice.getCommunicatesWithIDs().size() == 1 &&
-                    programToCheckForZeroChainApplice.getCommunicatesWithIDs().contains(programToCheckForZeroChainApplice.getId())) {// dead end (example 1 <-> 1):
-//                System.out.println(PRINT ? "    - dead end" : "");
-                result = false;
-            } else { // search with recursion
-//                System.out.println(PRINT ? "    --- search" : "");
-                // if recursion return 'ture, break the search, else cycle through the rest of communication programs.
-                // at the end return 'result' if otherwise not returned.
-                for (Integer idToCheck : programToCheckForZeroChainApplice.getCommunicatesWithIDs()) {
-//                    System.out.println(PRINT ? "        . call for " + idToCheck + " , callerId= " + callerId.getId() : "");
-//                    System.out.println(PRINT ? "this.getProgram(idToCheck) = " + this.getProgram(idToCheck): "");
-                    if (callerId == idToCheck) {
-                        System.out.println(PRINT ? "            WARNING: cycle call, continuing the FOR to next elem...." : "");
-                        System.out.println("callerId = " + callerId);
-                        System.out.println("idToCheck = " + idToCheck);
-                        result = false;
-
-                        continue;
-                    }
-                    result = isPartOfZeroChain(this.getProgram(idToCheck), programToCheckForZeroChainApplice.getId());
-                    if (result.equals(true)) {
-                        break;
-                    }
-                }
+            if (!outerProgram.traversed || outerProgram.communicatesWithZero == null) {
+                // search
+                determineZeroChainBelonging(outerProgram);
+            } else {
+                // skip
+                continue;
             }
-            programToCheckForZeroChainApplice.communicatesWithZero = result;
-        } else {
-            result = programToCheckForZeroChainApplice.communicatesWithZero;
+
         }
 
-//        System.out.println(PRINT ? "\n      INFO (isPartOfZeroChain): program= " + programToCheckForZeroChainApplice + "    result = " +
-//                result: "");
+    }
 
-        programToCheckForZeroChainApplice.traversed = true;
+    private boolean determineZeroChainBelonging(Program self) {
+        // set traversed
+        // set communicatesWithZero
+        boolean result = false;
+
+        if (self.traversed && self.communicatesWithZero == null) {
+            throw new Error("*****************************************************" +
+                    "\nVTP exception - d12: program marked as 'traversed', but " +
+                    "'communicatesWithZero' is NOT " +
+                    "set!! " +
+                    "Details:\n" + self +
+                    "\n******************************************************\n");
+        }
+
+        if (self.traversed) { // if already calculated, return result
+            result = self.communicatesWithZero;
+        } else {
+            for (int subId : self.getCommunicatesWithIDs()) {
+
+                if (self.getId() != subId) {
+                    result = determineZeroChainBelonging(programs.get(subId));
+                    if (result) break; // stop looping for this subGroup if we already determined ZeroBelonging.
+                } else {
+                    result = false;
+                }
+            }
+            self.traversed = true;
+            self.communicatesWithZero = result;
+        }
+
         return result;
+    }
+
+    public int getNumberOfProgramsInZeroGroup() {
+        int count = 0;
+        for (Program p : programs) {
+            if (p.communicatesWithZero) count++;
+        }
+        return count;
     }
 }

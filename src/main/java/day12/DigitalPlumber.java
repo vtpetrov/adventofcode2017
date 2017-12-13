@@ -11,7 +11,7 @@ import static helper.InputLoader.loadInput;
 public class DigitalPlumber {
 
     private static final String INPUT_FILE_NAME = "day12_input.txt";
-    //    private static final String INPUT_FILE_NAME = "debug.txt";
+    //        private static final String INPUT_FILE_NAME = "debug.txt";
     private static Programs programs = new Programs();
 
     public static void main(String[] args) throws Throwable {
@@ -56,18 +56,13 @@ public class DigitalPlumber {
 
         System.out.println("------------");
         System.out.println(programs.getPrograms());
-//        programs.populateCommunicatingPrograms();
+/*
 
-        int numberOfProgramsInZeroChain = 0;
+        programs.calculateZeroGroupChain();
 
-        for (Program programToCheckForZeroChainApplice : programs.getPrograms()) {
-            if (programs.isPartOfZeroChain(programToCheckForZeroChainApplice, programToCheckForZeroChainApplice.getId())) {
-                numberOfProgramsInZeroChain++;
-            }
-        }
-
-        System.out.println("\nnumberOfProgramsInZeroChain = " + numberOfProgramsInZeroChain);
-
+        int numberOfProgramsInZeroChain = programs.getNumberOfProgramsInZeroGroup();
+        System.out.println("numberOfProgramsInZeroChain = " + numberOfProgramsInZeroChain);
+*/
 
     }
 

@@ -57,6 +57,7 @@ public class Program {
                 this.communicatesWithIDs.add(Integer.valueOf(elem));
                 if (this.getId() == 0 || Integer.valueOf(elem) == 0) {
                     this.communicatesWithZero = true;
+                    this.traversed = true;
                     System.out.println("SETTING 'communicatesWithZero to TRUE-> " + this.getId() + ", " + elem);
                 }
             }
@@ -222,6 +223,7 @@ public class Program {
                 return "Program{" +
                         "id=" + id +
                         ", communicatesWithIDs=" + communicatesWithIDs +
+                        ", traversed=" + traversed +
                         ", communicatesWithZero=" + communicatesWithZero +
                         "}\n";
             default:
