@@ -243,9 +243,11 @@ public class Programs {
 
         programGroups.putIfAbsent(initiator, new TreeSet<>());
 
+/*
         System.out.println("    recursionCount      = " + recursionCount);
         System.out.println("            initiator        = " + initiator);
         System.out.println("            caller           = " + caller);
+*/
 
         programGroups.get(initiator).add(caller);
 
@@ -266,7 +268,6 @@ public class Programs {
 
 
     public void determineProgramGroups() {
-        System.out.println("DEBUG:     determineProgramGroups().... ");
         Set<Integer> inGroupAlready = new TreeSet<>();
         Set<Integer> remaining = programs.stream().map(Program::getId).collect(Collectors.toSet());
 
@@ -277,10 +278,12 @@ public class Programs {
             inGroupAlready.addAll(programGroups.get(i));
             remaining.removeAll(inGroupAlready);
 
+/*
             System.out.println("programGroups = " + programGroups);
             System.out.println("--------------=====================--------");
             System.out.println("inGroupAlready = " + inGroupAlready);
             System.out.println("remaining = " + remaining);
+*/
 
         } while (remaining.size() > 0);
     }

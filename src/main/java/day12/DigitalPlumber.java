@@ -4,7 +4,6 @@ import common.Program;
 import common.Programs;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +20,9 @@ public class DigitalPlumber {
         System.out.println("----   ADVENT Of code   2017    ----");
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
-        System.out.println("    ---=== Day 12 ===---     ");
-//        System.out.println("\n    ---=== Part 1 ===---     ");
-//        partOne();
+        System.out.println("                ---=== Day 12 ===---     ");
+        System.out.println("\n    ---=== Part 1 ===---     ");
+        partOne();
 //
         System.out.println("\n    ---=== Part 2 ===---     ");
         partTwo();
@@ -59,14 +58,9 @@ public class DigitalPlumber {
 
         programs.findConnectedToZero();
         List<Integer> result = new ArrayList<>(programs.getProgramGroups().get(0));
-        Collections.sort(result);
 
         System.out.println("Part 1 solution:");
         System.out.println("    INFO:    number of programs in group '0' = " + result.size());
-        System.out.println("    INFO:    number of groups= " + programs.getProgramGroups().size());
-        System.out.println("    INFO:   programs.getProgramGroups() = " + programs.getProgramGroups());
-
-
     }
 
     private static void partTwo() {
@@ -77,11 +71,10 @@ public class DigitalPlumber {
             programs.addProgram(new Program(getMainIn().nextLine()));
         }
 
-
         programs.determineProgramGroups();
 
         System.out.println("Part 2 solution:    ");
-        System.out.println("    number of groups= " + programs.getProgramGroups().size());
+        System.out.println("    INFO:   number of groups= " + programs.getProgramGroups().size());
 
 
     }
