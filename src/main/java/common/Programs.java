@@ -12,7 +12,6 @@ public class Programs {
     public static Program wrongProgramDay7;
     public static Program refProgramDay7;
     private List<Program> programs = new ArrayList<>();
-    private Set<Integer> programIdsConnectedToZero = new HashSet<>();
 
     static int count = 0;
 
@@ -228,33 +227,66 @@ public class Programs {
 
     }
 
-    private int recursionCount = 0;
+    private int recursionCount;
+    private Map<Integer, Set<Integer>> programGroups = new HashMap<>();
 
     public void findConnectedToZero() {
-        recursionCount = 0;
-        findConnectedToZero(0);
+        findConnectedTo_(0, 0);
     }
 
-    private void findConnectedToZero(int caller) {
-        recursionCount++;
+    private void findConnectedTo_(int initiator, int caller) {
+        if (initiator == caller) {
+            recursionCount = 1;
+        } else {
+            recursionCount++;
+        }
+
+        programGroups.putIfAbsent(initiator, new TreeSet<>());
+
         System.out.println("    recursionCount      = " + recursionCount);
+        System.out.println("            initiator        = " + initiator);
         System.out.println("            caller           = " + caller);
 
-        programIdsConnectedToZero.add(caller);
+        programGroups.get(initiator).add(caller);
 
-        Set<Integer> subIdsConnectedToZero = new HashSet<>();
-        subIdsConnectedToZero.addAll(programs.get(caller).getCommunicatesWithIDs());
+        Set<Integer> subIdsConnectedToInitiator = new TreeSet<>();
+        subIdsConnectedToInitiator.addAll(programs.get(caller).getCommunicatesWithIDs());
 
-        subIdsConnectedToZero.removeAll(programIdsConnectedToZero);
-        programIdsConnectedToZero.addAll(subIdsConnectedToZero);
+        subIdsConnectedToInitiator.removeAll(programGroups.get(initiator));
+        programGroups.get(initiator).addAll(subIdsConnectedToInitiator);
 
-        for (int sub : subIdsConnectedToZero) {
-            findConnectedToZero(sub);
+        for (int sub : subIdsConnectedToInitiator) {
+            findConnectedTo_(initiator, sub);
         }
     }
 
-    public Set<Integer> getProgramIdsConnectedToZero() {
-        return programIdsConnectedToZero;
+//    public Set<Integer> getProgramIdsConnectedTo_() {
+//        return programIdsConnectedTo_;
+//    }
+
+
+    public void determineProgramGroups() {
+        System.out.println("DEBUG:     determineProgramGroups().... ");
+        Set<Integer> inGroupAlready = new TreeSet<>();
+        Set<Integer> remaining = programs.stream().map(Program::getId).collect(Collectors.toSet());
+
+        do {
+            int i = new ArrayList<>(remaining).get(0);
+            findConnectedTo_(i, i);
+
+            inGroupAlready.addAll(programGroups.get(i));
+            remaining.removeAll(inGroupAlready);
+
+            System.out.println("programGroups = " + programGroups);
+            System.out.println("--------------=====================--------");
+            System.out.println("inGroupAlready = " + inGroupAlready);
+            System.out.println("remaining = " + remaining);
+
+        } while (remaining.size() > 0);
+    }
+
+    public Map<Integer, Set<Integer>> getProgramGroups() {
+        return programGroups;
     }
 
     @Override
@@ -263,4 +295,5 @@ public class Programs {
                 "programs=" + programs +
                 '}';
     }
+
 }

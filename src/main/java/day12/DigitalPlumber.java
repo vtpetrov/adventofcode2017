@@ -22,11 +22,11 @@ public class DigitalPlumber {
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
         System.out.println("    ---=== Day 12 ===---     ");
-        System.out.println("\n    ---=== Part 1 ===---     ");
-        partOne();
-
-//        System.out.println("\n    ---=== Part 2 ===---     ");
-//        partTwo();
+//        System.out.println("\n    ---=== Part 1 ===---     ");
+//        partOne();
+//
+        System.out.println("\n    ---=== Part 2 ===---     ");
+        partTwo();
 
         long end = new Date().getTime();
         System.out.println("\n:::END = " + end);
@@ -58,16 +58,31 @@ public class DigitalPlumber {
         }
 
         programs.findConnectedToZero();
-        List<Integer> result = new ArrayList<>(programs.getProgramIdsConnectedToZero());
+        List<Integer> result = new ArrayList<>(programs.getProgramGroups().get(0));
         Collections.sort(result);
 
-        System.out.println("result = " + result);
-        System.out.println("count= " + result.size());
+        System.out.println("Part 1 solution:");
+        System.out.println("    INFO:    number of programs in group '0' = " + result.size());
+        System.out.println("    INFO:    number of groups= " + programs.getProgramGroups().size());
+        System.out.println("    INFO:   programs.getProgramGroups() = " + programs.getProgramGroups());
 
 
     }
 
     private static void partTwo() {
+
+        loadInput(INPUT_FILE_NAME);
+
+        while (getMainIn().hasNextLine()) {
+            programs.addProgram(new Program(getMainIn().nextLine()));
+        }
+
+
+        programs.determineProgramGroups();
+
+        System.out.println("Part 2 solution:    ");
+        System.out.println("    number of groups= " + programs.getProgramGroups().size());
+
 
     }
 }
