@@ -29,7 +29,7 @@ public class InverseCaptcha {
      */
     private static void partOne() throws Throwable {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         String input = getMainIn().nextLine();
         int MAX_INDEX = input.length() - 1;
@@ -66,7 +66,7 @@ public class InverseCaptcha {
      */
     private static void partTwo() throws Throwable {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         String input = getMainIn().nextLine();
         int MAX_INDEX = input.length() - 1;

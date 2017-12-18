@@ -21,7 +21,7 @@ public class TwistyTrampolines {
     }
 
     private static void partOne() {
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
         int l = 0;
         int[] inputArray = new int[1070];
         int hops;
@@ -45,7 +45,7 @@ public class TwistyTrampolines {
 
     private static void partTwo() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
         int l = 0;
         int[] input = new int[1070];
         int hops;

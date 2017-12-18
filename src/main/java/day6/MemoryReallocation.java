@@ -52,7 +52,7 @@ public class MemoryReallocation {
     }
 
     private static int job() {
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         String s = getMainIn().nextLine();
 

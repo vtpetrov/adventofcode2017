@@ -50,7 +50,7 @@ public class DigitalPlumber {
      */
     private static void partOne() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         while (getMainIn().hasNextLine()) {
             programs.addProgram(new Program(getMainIn().nextLine()));
@@ -65,7 +65,7 @@ public class DigitalPlumber {
 
     private static void partTwo() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         while (getMainIn().hasNextLine()) {
             programs.addProgram(new Program(getMainIn().nextLine()));
