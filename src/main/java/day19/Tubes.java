@@ -8,7 +8,7 @@ import static helper.InputLoader.loadInput;
 
 public class Tubes {
     private static final String INPUT_FILE_NAME = "day19_input.txt";
-    //    private static final String INPUT_FILE_NAME = "debug.txt";
+    //        private static final String INPUT_FILE_NAME = "debug.txt";
     private static final int MAP_SIZE = 201;
     private static final String H_PATH = "-";
     private static final String V_PATH = "|";
@@ -41,18 +41,8 @@ public class Tubes {
         while (getMainIn().hasNextLine()) {
             line = getMainIn().nextLine();
             map[i] = line.split("");
-            System.out.println("i = " + i);
-            System.out.println("    map[i].length = " + map[i].length);
             i++;
         }
-
-        for (int h = 0; h < 6; h++) {
-            for (int v = 0; v < map[h].length; v++) {
-                System.out.println("    map[" + h + "][" + v + "] = " + map[h][v]);
-            }
-        }
-
-        System.out.println("Arrays.deepToString(map) = " + Arrays.deepToString(map));
 
         //initialize starting point, find starting 'j':
         i = 0;
@@ -62,8 +52,6 @@ public class Tubes {
         currentDirection = Direction.DOWN;
 
         do {
-            System.out.println("    currentDirection = " + currentDirection);
-            System.out.println("    currentPathElem = " + currentPathElem);
 
             move();
 
@@ -71,12 +59,14 @@ public class Tubes {
 
             if (!PATH_ELEMS.contains(currentPathElem)) { // letter:
                 PATH_LETTERS.add(currentPathElem);
-                System.out.println("    PATH_LETTERS = " + PATH_LETTERS);
             }
 
         } while (!endOfPath());
 
-        System.out.println("'\n    Part 1 solution:   letters = " + PATH_LETTERS.stream().collect(Collectors.joining()));
+        System.out.println("\n    Part 1 solution:   letters = " + PATH_LETTERS.stream().collect(Collectors.joining()));
+
+        System.out.println("\n    ---=== Part 2 ===---     ");
+        System.out.println("\n    Part 2 solution:   moves = " + moves);
 
 
         long end = new Date().getTime();
@@ -98,7 +88,6 @@ public class Tubes {
 
     private static void move() {
         moves++;
-        System.out.println("move: " + moves);
 
         switch (currentDirection) {
             case DOWN:
@@ -144,7 +133,6 @@ public class Tubes {
      * call moveX based on currentDirection and possible turn
      */
     private static void turn() {
-        System.out.println("    ..turn..");
         // set new currentDirection and call moveX
         Turn possibleTurn = getPossibleTurn();
 
@@ -225,7 +213,6 @@ public class Tubes {
 
     private static boolean endOfPath() {
         if (currentPathElem == null || currentPathElem.equals(" ")) {
-            System.out.println("\nEND OF path.!");
             return true;
         } else return false;
     }
