@@ -8,7 +8,7 @@ import static helper.InputLoader.*;
 
 public class StreamProcessing {
     private static final String INPUT_FILE_NAME = "day9_input.txt";
-    //        private static final String INPUT_FILE_NAME = "debug.txt";
+    //            private static final String INPUT_FILE_NAME = "debug.txt";
     private static final String GROUP_START = "{";
     private static final String GROUP_END = "}";
     private static final String GARBAGE_START = "<";
@@ -21,6 +21,7 @@ public class StreamProcessing {
     private static boolean skipNext;
     private static boolean inGroup = false;
     private static List<String> skippedList = new ArrayList<>();
+    private static int garbageCharCount = 0;
 
     private static void switchContext() {
         inGarbage = inStream;
@@ -57,6 +58,8 @@ public class StreamProcessing {
                         case GARBAGE_END:
                             switchContext();
                             break;
+                        default:
+                            garbageCharCount++;
                     }
                 } else { // in stream
                     switch (ch) {
@@ -86,10 +89,11 @@ public class StreamProcessing {
 
         }
 
-        System.out.println("\nGROUPS      = " + groups);
-        System.out.println("TOTALSCORE  = " + totalScore);
+        System.out.println("\nGROUPS        = " + groups);
+        System.out.println("TOTALSCORE      = " + totalScore);
+        System.out.println("garbageCharCount = " + garbageCharCount);
 
-        System.out.println("skippedList = " + skippedList);
+        System.out.println("\nskippedList = " + skippedList);
 
         long end = new Date().getTime();
         System.out.println("\n:::END = " + end);
