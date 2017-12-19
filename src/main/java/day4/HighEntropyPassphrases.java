@@ -25,7 +25,7 @@ public class HighEntropyPassphrases {
      */
     private static void partOne() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         String passphrase;
 
@@ -53,7 +53,7 @@ public class HighEntropyPassphrases {
 
     private static void partTwo() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         String passphrase;
 

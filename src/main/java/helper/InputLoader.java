@@ -11,14 +11,14 @@ public class InputLoader {
     private static Path inputFile;
     private static Scanner mainIn;
 
-    public static void loadInput(String fileName) {
+    public static void loadInput(String fileName, String delimiter) {
 
         INPUT_FILE_NAME = fileName;
 
         inputFile = FileSystems.getDefault().getPath("src", "main", "resources", INPUT_FILE_NAME);
 
         try {
-            mainIn = new Scanner(inputFile).useDelimiter(", ");
+            mainIn = new Scanner(inputFile).useDelimiter(delimiter);
         } catch (IOException e) {
             e.printStackTrace();
             throw new Error("Couldn't load input file [" + inputFile.toString() + "]");

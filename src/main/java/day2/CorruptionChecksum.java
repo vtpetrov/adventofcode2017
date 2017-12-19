@@ -34,7 +34,7 @@ public class CorruptionChecksum {
 
         long sum = 0;
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         while (getMainIn().hasNextLine()) {
             String row = getMainIn().nextLine();
@@ -89,7 +89,7 @@ public class CorruptionChecksum {
 
         long sum = 0;
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
         int redNomer = 0;
         while (getMainIn().hasNextLine()) {
             redNomer++;

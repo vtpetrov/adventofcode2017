@@ -57,7 +57,7 @@ public class ILikeRegisters {
      */
     private static void partOneAndTwo() {
 
-        loadInput(INPUT_FILE_NAME);
+        loadInput(INPUT_FILE_NAME, ", ");
 
         while (getMainIn().hasNextLine()) {
             String nextLine = getMainIn().nextLine();
