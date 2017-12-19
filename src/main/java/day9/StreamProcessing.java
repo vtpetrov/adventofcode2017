@@ -1,12 +1,14 @@
 package day9;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static helper.InputLoader.*;
 
 public class StreamProcessing {
     private static final String INPUT_FILE_NAME = "day9_input.txt";
-    //    private static final String INPUT_FILE_NAME = "debug.txt";
+    //        private static final String INPUT_FILE_NAME = "debug.txt";
     private static final String GROUP_START = "{";
     private static final String GROUP_END = "}";
     private static final String GARBAGE_START = "<";
@@ -17,9 +19,10 @@ public class StreamProcessing {
     private static boolean inStream;
     private static boolean inGarbage;
     private static boolean skipNext;
+    private static boolean inGroup = false;
+    private static List<String> skippedList = new ArrayList<>();
 
     private static void switchContext() {
-//        garbage -> stream
         inGarbage = inStream;
         inStream = !inGarbage;
     }
@@ -32,7 +35,6 @@ public class StreamProcessing {
         System.out.println("                - StreamProcessing -     ");
         System.out.println("\n    ---=== Part 1 ===---     ");
 
-
         loadInput(INPUT_FILE_NAME, "");
 
         inStream = true;
@@ -41,44 +43,57 @@ public class StreamProcessing {
         String ch = null;
         String skipped = null;
         int cost = 1;
-//        {{<a!>},{<a!>},{<a!>},{<ab>}}
+
         while (getMainIn().hasNext()) {
 
             if (!skipNext) { // process:
                 ch = getMainIn().next();
 
                 if (inGarbage) { // in garbage
-                    if (ch.equals(SKIP)) skipNext = true;
-                } else { // in stream
-                    if (ch.equals("<")) switchContext();
-                    if (ch.equals(">")) switchContext();
-                    if (ch.equals("{")) {
-                        groups++;
-                        totalScore += cost;
-                        cost++;
+                    switch (ch) {
+                        case SKIP:
+                            skipNext = true;
+                            break;
+                        case GARBAGE_END:
+                            switchContext();
+                            break;
                     }
-                    if (ch.equals("}")) {
-                        cost--;
+                } else { // in stream
+                    switch (ch) {
+                        case GARBAGE_START:
+                            switchContext();
+                            break;
+                        case GARBAGE_END:
+                            switchContext();
+                            break;
+                        case GROUP_START:
+                            inGroup = true;
+                            groups++;
+                            totalScore += cost;
+                            cost++;
+                            break;
+                        case GROUP_END:
+                            if (inGroup) cost--;
+                            break;
                     }
                 }
 
             } else { // skip
                 skipped = getMainIn().next();
+                skippedList.add(skipped);
                 skipNext = false;
             }
 
-            System.out.println("ch = " + ch);
-            System.out.println("skipNext = " + skipNext);
-            System.out.println("skipped = " + skipped);
-
         }
 
-        System.out.println("groups      = " + groups);
-        System.out.println("totalScore  = " + totalScore);
+        System.out.println("\nGROUPS      = " + groups);
+        System.out.println("TOTALSCORE  = " + totalScore);
+
+        System.out.println("skippedList = " + skippedList);
 
         long end = new Date().getTime();
         System.out.println("\n:::END = " + end);
-        System.out.println("\nDuration: " + (end - start) / 1000 + " s");
+        System.out.println("\nDuration: " + (end - start) + "ms (" + (end - start) / 1000 + "s)");
 
         closeInput();
 
