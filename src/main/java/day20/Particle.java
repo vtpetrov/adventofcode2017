@@ -2,9 +2,11 @@ package day20;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
+@ToString(includeFieldNames = false)
 class Particle {
 
     Point position;
@@ -27,5 +29,24 @@ class Particle {
         Point a = new Point(aStr);
 
         return new Particle(p, v, a);
+    }
+
+    /**
+     * Increase the X velocity by the X acceleration.
+     * Increase the Y velocity by the Y acceleration.
+     * Increase the Z velocity by the Z acceleration.
+     * <p>
+     * Increase the X position by the X velocity.
+     * Increase the Y position by the Y velocity.
+     * Increase the Z position by the Z velocity.
+     */
+    void updateCoordinates() {
+        velocity.x += acceleration.x;
+        velocity.y += acceleration.y;
+        velocity.z += acceleration.z;
+
+        position.x += velocity.x;
+        position.y += velocity.y;
+        position.z += velocity.z;
     }
 }

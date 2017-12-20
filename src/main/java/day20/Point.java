@@ -1,16 +1,20 @@
 package day20;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
-public class Point {
+@ToString(includeFieldNames = false, exclude = "distanceToCenter")
+@EqualsAndHashCode(exclude = "distanceToCenter")
+class Point {
 
-    int x;
-    int y;
-    int z;
-    int distanceToCenter;
+    long x;
+    long y;
+    long z;
+    long distanceToCenter;
 
-    public Point(String input) {
+    Point(String input) {
         String[] inputArr = input.split(",");
         this.x = Integer.parseInt(inputArr[0]);
         this.y = Integer.parseInt(inputArr[1]);
