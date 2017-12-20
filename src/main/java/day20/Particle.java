@@ -49,4 +49,8 @@ class Particle {
         position.y += velocity.y;
         position.z += velocity.z;
     }
+
+    String getPositionSimpleValue() {
+        return Long.toString(position.getX()) + Long.toString(position.getY()) + Long.toString(position.getZ());
+    }
 }

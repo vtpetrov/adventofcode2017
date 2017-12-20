@@ -1,22 +1,20 @@
 package day20;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static helper.InputLoader.*;
 
 public class ParticleSwarm {
 
-    private static final String INPUT_FILE_NAME = "day20_input.txt";
-//    private static final String INPUT_FILE_NAME = "debug.txt";
+    //    private static final String INPUT_FILE_NAME = "day20_input.txt";
+    private static final String INPUT_FILE_NAME = "debug.txt";
 
     private static List<Particle> particlesInitial = new ArrayList<>();
     private static List<Particle> remainingParticles;
     private static int ticks;
     private static int collisions;
+    private static Map<Point, Integer> collisionsMap = new HashMap<>();
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");
@@ -90,7 +88,7 @@ public class ParticleSwarm {
 
         remainingParticles = new ArrayList<>(particlesInitial);
         int c = 1;
-        while (c < 500 && remainingParticles.size() > 1) {
+        while (c < 50 && remainingParticles.size() > 1) {
             removeCollisions();
             tick(remainingParticles);
             c++;
@@ -99,13 +97,38 @@ public class ParticleSwarm {
 
         System.out.println("    Part 2 solution:   remaining particles= [" + remainingParticles.size() + "] " + remainingParticles);
 
+        System.out.println("\n IMPl2");
+        remainingParticles = new ArrayList<>(particlesInitial);
+        c = 1;
+        while (c < 2 && remainingParticles.size() > 1) {
+            impl2();
+            tick(remainingParticles);
+            c++;
+            System.out.println("       IMPl2  remaining particles= [" + remainingParticles.size() + "] " + remainingParticles);
+        }
+        closeInput();
+
+
         long end = new Date().getTime();
         System.out.println("\nP2 Duration: " + (end - p2Start) + "ms (" + (end - p2Start) / 1000 + "s)");
         System.out.println("\nTotal Duration: " + (end - start) + "ms (" + (end - start) / 1000 + "s)");
 
         System.out.println("\n:::END = " + end);
 
-        closeInput();
+    }
+
+    private static void impl2() {
+
+        System.out.println("IMPL 2 getPositionSimpleValue = " + remainingParticles.get(0).getPositionSimpleValue());
+
+        for (Point entry : remainingParticles.stream().map(Particle::getPosition).collect(Collectors.toList())) {
+            collisionsMap.merge(entry, 1, Integer::sum);
+        }
+
+        if (Collections.max(collisionsMap.values()) > 1) {
+            System.out.println("there are points to remove");
+            System.out.println("collisionsMap = " + collisionsMap);
+        }
     }
 
 //    private static List<Particle> particlesInitial = new ArrayList<>();
