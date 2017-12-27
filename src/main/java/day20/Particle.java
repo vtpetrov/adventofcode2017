@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Data
 @AllArgsConstructor
-@ToString(includeFieldNames = false)
+//@ToString(includeFieldNames = false)
 class Particle {
 
     Point position;
@@ -52,5 +52,11 @@ class Particle {
 
     String getPositionSimpleValue() {
         return Long.toString(position.getX()) + Long.toString(position.getY()) + Long.toString(position.getZ());
+    }
+
+//    p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>
+    @Override
+    public String toString() {
+        return "{ p=<" + position +">, v=<" + velocity +">, a=<" + acceleration +"> }\n";
     }
 }

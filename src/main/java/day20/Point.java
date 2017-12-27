@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
-@ToString(includeFieldNames = false, exclude = "distanceToCenter")
+//@ToString(includeFieldNames = false, exclude = "distanceToCenter")
 @EqualsAndHashCode(exclude = "distanceToCenter")
 class Point {
 
@@ -21,5 +21,14 @@ class Point {
         this.z = Integer.parseInt(inputArr[2]);
 
         this.distanceToCenter = Math.abs(x) + Math.abs(y) + Math.abs(z);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("");
+        sb.append(x);
+        sb.append(",").append(y);
+        sb.append(",").append(z);
+        return sb.toString();
     }
 }
