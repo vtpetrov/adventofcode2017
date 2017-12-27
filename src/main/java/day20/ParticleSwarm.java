@@ -86,7 +86,7 @@ public class ParticleSwarm {
 
         remainingParticles = new ArrayList<>(particlesInitial);
         int c = 1;
-        while (c < 150 && remainingParticles.size() > 1) {
+        while (c < 45 && remainingParticles.size() > 1) {
             removeCollisions();
             tick(remainingParticles);
             c++;
@@ -94,7 +94,7 @@ public class ParticleSwarm {
         }
 
 //        System.out.println("remainingParticles = " + remainingParticles);
-        System.out.println("    Part 2 solution:   remaining particles count= [" + remainingParticles.size() + "] ");
+        System.out.println("\n    Part 2 solution:   remaining particles count= [" + remainingParticles.size() + "] ");
 
         /*System.out.println("\n IMPl2");
         remainingParticles = new ArrayList<>(particlesInitial);
@@ -133,7 +133,7 @@ public class ParticleSwarm {
             for (int j = i + 1; j < remainingParticles.size(); j++) {
                 if (remainingParticles.get(i).getPosition().equals(remainingParticles.get(j).getPosition())) {
                     checkDigit++;
-                    System.out.println(String.format(" !!    MATCH    %s   !! i= %s , j=%s", checkDigit, i, j));
+//                    System.out.println(String.format(" !!    MATCH    %s   !! i= %s , j=%s", checkDigit, i, j));
                     particlesToRemove.add(remainingParticles.get(j));
                     match = true;
                 }
@@ -145,8 +145,8 @@ public class ParticleSwarm {
                 particlesToRemove.add(remainingParticles.get(i));
 
                 remainingParticles.removeAll(particlesToRemove);
-                System.out.println("    - removed collisions:       [" + particlesToRemove.size() + "]");
-                System.out.println(String.format("checkDigit= [%s]", checkDigit));
+//                System.out.println("    - removed collisions:       [" + particlesToRemove.size() + "]");
+//                System.out.println(String.format("checkDigit= [%s]", checkDigit));
                 if (checkDigit != particlesToRemove.size()) {
 
                     throw new Error("VTP, digits doesn't match !!!");
