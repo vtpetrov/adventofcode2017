@@ -19,8 +19,6 @@ public class Template {
         loadInput(INPUT_FILE_NAME, "");
         partOne();
 
-        System.out.println("\n    Part 1 solution:   XXXXXX= [" );
-
 
         long p2Start = new Date().getTime();
         System.out.println("\nP1 Duration: " + (p2Start - start) + "ms (" + (p2Start - start) / 1000 + "s)");
@@ -28,7 +26,6 @@ public class Template {
         System.out.println("=========================================================================================");
 
         partTwo();
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
 
         closeInput();
 
@@ -43,10 +40,16 @@ public class Template {
 
     private static void partOne() {
 
+
+
+        System.out.println("\n    Part 1 solution:   XXXXXX= [" );
+
     }
 
     private static void partTwo() {
 
+
+        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
     }
 
 }
