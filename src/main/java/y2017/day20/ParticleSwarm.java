@@ -7,7 +7,7 @@ import static helper.InputLoader.*;
 
 public class ParticleSwarm {
 
-        private static final String INPUT_FILE_NAME = "day20_input.txt";
+        private static final String INPUT_FILE_NAME = "year_2017/day20_input.txt";
 //    private static final String INPUT_FILE_NAME = "debug.txt";
 
     private static List<Particle> particlesInitial = new ArrayList<>();

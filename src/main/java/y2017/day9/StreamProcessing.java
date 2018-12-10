@@ -7,7 +7,7 @@ import java.util.List;
 import static helper.InputLoader.*;
 
 public class StreamProcessing {
-    private static final String INPUT_FILE_NAME = "day9_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day9_input.txt";
     //            private static final String INPUT_FILE_NAME = "debug.txt";
     private static final String GROUP_START = "{";
     private static final String GROUP_END = "}";

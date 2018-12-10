@@ -10,7 +10,7 @@ import static helper.InputLoader.*;
 
 public class RecursiveCircus {
 
-    private static final String INPUT_FILE_NAME = "day7_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day7_input.txt";
     //    private static final String INPUT_FILE_NAME = "debug.txt";
     private static Programs programs = new Programs();
 

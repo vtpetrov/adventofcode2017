@@ -5,7 +5,7 @@ import static helper.InputLoader.loadInput;
 
 public class Template {
 
-    private static final String INPUT_FILE_NAME = "y201x-dayXX_input.txt";
+    private static final String INPUT_FILE_NAME = "year_201x/dayXX_input.txt";
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   201x    ----");
@@ -35,6 +35,7 @@ public class Template {
 
         long end = new Date().getTime();
         System.out.println("\nP2 Duration: " + (end - p2Start) + "ms (" + (end - p2Start) / 1000 + "s)");
+        System.out.println("==========");
         System.out.println("\nTotal Duration: " + (end - start) + "ms (" + (end - start) / 1000 + "s)");
 
         System.out.println("\n:::END = " + end);

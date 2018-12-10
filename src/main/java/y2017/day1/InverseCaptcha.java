@@ -4,7 +4,7 @@ import static helper.InputLoader.*;
 
 public class InverseCaptcha {
 
-    private static final String INPUT_FILE_NAME = "day1_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day1_input.txt";
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2017    ----");

@@ -11,7 +11,7 @@ import static helper.InputLoader.loadInput;
 public class MemoryReallocation {
 
 
-    private static final String INPUT_FILE_NAME = "day6_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day6_input.txt";
     private static List<Integer[]> patternHistory = new ArrayList<>();
     private static int firstIndex;
     //    private static final String INPUT_FILE_NAME = "debug.txt";

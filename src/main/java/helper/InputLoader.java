@@ -16,6 +16,7 @@ public class InputLoader {
         INPUT_FILE_NAME = fileName;
 
         inputFile = FileSystems.getDefault().getPath("src", "main", "resources", INPUT_FILE_NAME);
+        System.out.println("inputFile = " + inputFile);
 
         try {
             mainIn = new Scanner(inputFile).useDelimiter(delimiter);

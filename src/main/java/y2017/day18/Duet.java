@@ -10,7 +10,7 @@ import static helper.InputLoader.loadInput;
 
 public class Duet {
 
-    private static final String INPUT_FILE_NAME = "day18_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day18_input.txt";
 //    private static final String INPUT_FILE_NAME = "debug.txt";
 
     private static List<Instruction> instructions = new ArrayList<>();

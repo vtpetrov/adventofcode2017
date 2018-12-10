@@ -9,7 +9,7 @@ import static helper.InputLoader.*;
 
 public class ILikeRegisters {
 
-    private static final String INPUT_FILE_NAME = "day8_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day8_input.txt";
 //    private static final String INPUT_FILE_NAME = "debug.txt";
 
     private static Set<String> registerNames = new TreeSet<>();

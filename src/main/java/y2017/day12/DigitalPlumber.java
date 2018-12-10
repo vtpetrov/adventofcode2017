@@ -12,7 +12,7 @@ import static helper.InputLoader.loadInput;
 
 public class DigitalPlumber {
 
-    private static final String INPUT_FILE_NAME = "day12_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day12_input.txt";
     //    private static final String INPUT_FILE_NAME = "debug.txt";
     private static Programs programs = new Programs();
 

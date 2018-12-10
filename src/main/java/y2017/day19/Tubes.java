@@ -7,7 +7,7 @@ import static helper.InputLoader.getMainIn;
 import static helper.InputLoader.loadInput;
 
 public class Tubes {
-    private static final String INPUT_FILE_NAME = "day19_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day19_input.txt";
     //        private static final String INPUT_FILE_NAME = "debug.txt";
     private static final int MAP_SIZE = 201;
     private static final String H_PATH = "-";

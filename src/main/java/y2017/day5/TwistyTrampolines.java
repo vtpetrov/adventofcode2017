@@ -6,7 +6,7 @@ import static helper.InputLoader.*;
 
 public class TwistyTrampolines {
 
-    private static final String INPUT_FILE_NAME = "day5_input.txt";
+    private static final String INPUT_FILE_NAME = "year_2017/day5_input.txt";
     private static final int BOUNDARY = 3;
 
     public static void main(String[] args) throws Throwable {
