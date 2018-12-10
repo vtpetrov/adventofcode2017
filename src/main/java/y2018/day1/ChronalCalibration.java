@@ -1,18 +1,21 @@
+package y2018.day1;
+
 import java.util.Date;
 
 import static helper.InputLoader.closeInput;
+import static helper.InputLoader.getMainIn;
 import static helper.InputLoader.loadInput;
 
-public class Template {
+public class ChronalCalibration {
 
-    private static final String INPUT_FILE_NAME = "y201x-dayXX_input.txt";
+    private static final String INPUT_FILE_NAME = "y2018-day1_input.txt";
 
     public static void main(String[] args) throws Throwable {
-        System.out.println("----   ADVENT Of code   201x    ----");
+        System.out.println("----   ADVENT Of code   2018    ----");
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
-        System.out.println("\n                ---=== Day XX ===---     ");
-        System.out.println("                   - XXXXXXXXX -     ");
+        System.out.println("\n                ---=== Day 1 ===---     ");
+        System.out.println("                   - Chronal Calibration -     ");
 
         System.out.println("\n    ---=== Part 1 ===---     ");
 
@@ -41,6 +44,14 @@ public class Template {
     }
 
     private static void partOne() {
+
+        long freq = 0;
+
+        while (getMainIn().hasNextLine()){
+
+            freq += getMainIn().nextInt();
+
+        }
 
     }
 
