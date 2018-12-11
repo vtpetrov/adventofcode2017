@@ -1,9 +1,6 @@
 package y2018.day2;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static helper.InputLoader.*;
 
@@ -13,7 +10,7 @@ public class InventoryManagementSystem {
     private static ArrayList<String> boxes = new ArrayList<>();
     private static int twos = 0;
     private static int threes = 0;
-    private static long checksum = 0;
+
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2018    ----");
@@ -57,18 +54,19 @@ public class InventoryManagementSystem {
 
     private static void partOne() {
 
-        for(String box : boxes){
+        for (String box : boxes) {
             Map<String, Integer> boxStats = new HashMap<>();
 
-            for(int i = 0; i < box.length(); i++){
+            for (int i = 0; i < box.length(); i++) {
                 boxStats.merge(String.valueOf(box.charAt(i)), 1, Integer::sum);
             }
 
-            if(boxStats.containsValue(2)) twos++;
-            if(boxStats.containsValue(3)) threes++;
+            if (boxStats.containsValue(2)) twos++;
+            if (boxStats.containsValue(3)) threes++;
+
         }
 
-        checksum = twos * threes;
+        long checksum = twos * threes;
 
 
         System.out.println("\n    Part 1 solution:   the checksum for your list of box IDs= " + checksum);
@@ -77,8 +75,36 @@ public class InventoryManagementSystem {
 
     private static void partTwo() {
 
+        int boxLength = boxes.get(0).length();
+        SortedSet<String> sortedBoxes = new TreeSet<>(boxes);
+        boxes = new ArrayList<>(sortedBoxes);
 
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
+        for (int i = 0; i < boxes.size() - 1; i++) {
+
+            String box1, box2;
+            box1 = boxes.get(i);
+            box2 = boxes.get(i + 1);
+
+            int diffs = 0;
+            int diffPos = -1;
+
+            for (int k = 0; k < boxLength; k++) {
+                if (box1.charAt(k) != box2.charAt(k)) {
+                    diffs++;
+                    diffPos = k;
+                }
+            }
+
+            if (diffs == 1) {// exactly 1 difference, this is our solution
+
+                String commonLetters = box1.substring(0, diffPos) + box1.substring(diffPos + 1, boxLength);
+                System.out.println("\n    Part 2 solution:   letters in common between the two correct box IDs= " + commonLetters);
+                return;
+
+            }
+
+        }
+
     }
 
 }
