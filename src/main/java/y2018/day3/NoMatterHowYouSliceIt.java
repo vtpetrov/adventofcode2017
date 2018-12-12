@@ -21,11 +21,9 @@ public class NoMatterHowYouSliceIt {
         System.out.println("\n    ---=== Part 1 ===---     ");
 
         loadInput(INPUT_FILE_NAME, "");
-        while(getMainIn().hasNextLine()){
+        while (getMainIn().hasNextLine()) {
             claims.add(new Claim(getMainIn().nextLine()));
         }
-
-        System.out.println("initial fabric: \n" + fabric);
 
         partOne();
 
@@ -51,12 +49,9 @@ public class NoMatterHowYouSliceIt {
     private static void partOne() {
 
 
-        for(Claim c : claims){
+        for (Claim c : claims) {
             fabric.drawClaim(c);
         }
-
-        System.out.println("FINAL fabric = " + fabric);
-
 
         System.out.println("\n    Part 1 solution:   square inches of fabric within two or more claims= " + fabric.getOverlaps());
 
@@ -64,8 +59,7 @@ public class NoMatterHowYouSliceIt {
 
     private static void partTwo() {
 
-
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
+        System.out.println("\n    Part 2 solution:   the ID of the only claim that doesn't overlap= " + fabric.getNonOverlapingClaims());
     }
 
 
