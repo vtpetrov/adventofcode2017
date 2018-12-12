@@ -12,7 +12,7 @@ public class Template {
         long start = new Date().getTime();
         System.out.println("\n:::START = " + start);
         System.out.println("\n                ---=== Day XX ===---     ");
-        System.out.println("                   - XXXXXXXXX -     ");
+        System.out.println("                  - XXXXXXXXX -     ");
 
         System.out.println("\n    ---=== Part 1 ===---     ");
 
