@@ -24,6 +24,7 @@ public class Template {
         System.out.println("\nP1 Duration: " + (p2Start - start) + "ms (" + (p2Start - start) / 1000 + "s)");
 
         System.out.println("=========================================================================================");
+        System.out.println("\n    ---=== Part 2 ===---     ");
 
         partTwo();
 
