@@ -1,6 +1,6 @@
 package y2018.day5;
 
-import java.util.Date;
+import java.util.*;
 
 import static helper.InputLoader.*;
 
@@ -48,15 +48,35 @@ public class AlchemicalReduction {
     }
 
     private static void partOne() {
-//        System.out.println("Solution 1: ----");
-//        while (removeOneReaction(resultingPolymer)) {
-//        }
 
-        System.out.println("Solution 2: ------");
         removeAllReactions(originalPolymer);
 
         System.out.println("\n    Part 1 solution:   units remain after fully reacting the polymer = " + resultingPolymer.length());
 
+    }
+
+    private static void partTwo() {
+
+        int minLength = originalPolymer.length();
+
+        String[] alphabet =
+                new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+        // cycle through each character (lower + upper), remove it and calculate the reaction.
+        // Notice length after each
+        for(String ch : alphabet){
+            String reducedInput = originalPolymer.replaceAll("[" + ch + ch.toUpperCase()+ "]", ""); // remove lowercase + uppercase
+
+            removeAllReactions(reducedInput);
+
+            if(resultingPolymer.length() < minLength){
+                minLength = resultingPolymer.length();
+            }
+
+        }
+
+
+        System.out.println("\n    Part 2 solution:   the length of the shortest polymer you can produce= " + minLength);
     }
 
     private static void removeAllReactions(String inputPolymer) {
@@ -89,33 +109,4 @@ public class AlchemicalReduction {
         resultingPolymer = inputSB.toString();
     }
 
-    private static boolean removeOneReaction(String inputPolymer) {
-
-        String resultingString;
-
-        for (int i = 0; i < inputPolymer.length() - 2; i++) {
-            char curr = inputPolymer.charAt(i);
-            char next = inputPolymer.charAt(i + 1);
-
-            boolean currIsCapital = Character.isUpperCase(curr);
-            boolean nextIsCapital = Character.isUpperCase(next);
-
-            if (Character.toLowerCase(curr) == Character.toLowerCase(next)) {
-                if (currIsCapital != nextIsCapital) { // react
-                    resultingString = inputPolymer.substring(0, i) + inputPolymer.substring(i + 2);
-                    resultingPolymer = resultingString;
-                    return true;
-                }
-            }
-        }
-
-        return false;
-
-    }
-
-    private static void partTwo() {
-
-
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
-    }
 }
