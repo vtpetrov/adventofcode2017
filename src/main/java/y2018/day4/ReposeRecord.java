@@ -14,6 +14,8 @@ import static helper.InputLoader.*;
 public class ReposeRecord {
 
     private static final String INPUT_FILE_NAME = "year_2018/day4_input.txt";
+//    private static final String INPUT_FILE_NAME = "debug.txt";
+
     private static Map<String, String> inputRows = new TreeMap<>();
     private static Map<Integer, Guard> guards = new HashMap<>();
 
@@ -113,8 +115,28 @@ public class ReposeRecord {
 
     private static void partTwo() {
 
+        int maxMinuteValue = -1;
+        int maxMinuteIdx = -1;
+        int guardIdS2 = -1;
 
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
+        for(Guard currGuard : guards.values()){
+
+            int currMinuteIndex = currGuard.getMostSleepingMinute();
+            int currMinuteValue = currGuard.getSleepMap()[currMinuteIndex];
+            if( currMinuteValue > maxMinuteValue){
+                maxMinuteValue = currMinuteValue;
+                maxMinuteIdx = currMinuteIndex;
+                guardIdS2 = currGuard.getId();
+            }
+
+        }
+
+        System.out.println("maxMinuteIdx = " + maxMinuteIdx);
+        System.out.println("maxMinuteValue = " + maxMinuteValue);
+        System.out.println("guardIdS2 = " + guardIdS2);
+
+        System.out.println("\n    Part 2 solution:   the ID of the guard you chose multiplied by the minute you chose= " +
+        guardIdS2 * maxMinuteIdx);
     }
 
 }
@@ -145,6 +167,10 @@ class Guard {
         }
     }
 
+    /**
+     *
+     * @return minute index
+     */
     public int getMostSleepingMinute() {
         int max = -1;
         int maxI = -1;
