@@ -6,6 +6,7 @@ import static helper.InputLoader.loadInput;
 public class Template {
 
     private static final String INPUT_FILE_NAME = "year_201x/dayXX_input.txt";
+//    private static final String INPUT_FILE_NAME = "debug.txt";
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   201x    ----");
