@@ -38,14 +38,14 @@ public class TheSumOfItsParts {
 //        }
 
 
-//        partOne();
+        partOne();
 
 
         long p2Start = new Date().getTime();
         System.out.println("\nP1 Duration: " + (p2Start - start) + "ms (" + (p2Start - start) / 1000 + "s)");
 
         System.out.println("=========================================================================================");
-        System.out.println("\n    ---=== Part 2 ===---     ");
+        System.out.println("\n    ---=== Part 2 ===---     \n");
 
 
         loadInput(INPUT_FILE_NAME, "");
@@ -105,18 +105,18 @@ public class TheSumOfItsParts {
 
         int loop = 1;
         do {
-            System.out.println("loop = " + loop);
+//            System.out.println("loop = " + loop);
             recalculateAvailableSteps(allSteps);
 
-            System.out.println("    in p1 ...");
-            for (Object s : availabeSteps.toArray()) {
-                System.out.println("        avail = " + (Step) s);
-            }
-            for (Object s : allSteps.values()) {
-                System.out.println("        All = " + (Step) s);
-            }
+//            System.out.println("    in p1 ...");
+//            for (Object s : availabeSteps.toArray()) {
+//                System.out.println("        avail = " + (Step) s);
+//            }
+//            for (Object s : allSteps.values()) {
+//                System.out.println("        All = " + (Step) s);
+//            }
 
-            System.out.println(" => orderOfSteps = " + orderOfSteps);
+//            System.out.println(" => orderOfSteps = " + orderOfSteps);
 
             execute(1, allSteps);
             loop++;
@@ -124,7 +124,7 @@ public class TheSumOfItsParts {
 
         } while (orderOfSteps.toString().length() < allSteps.size());
 
-        System.out.println("END availabeSteps = " + availabeSteps);
+//        System.out.println("END availabeSteps = " + availabeSteps);
         System.out.println("\n    Part 1 solution:   Steps are completed in the following order= " + orderOfSteps);
 
     }
@@ -157,7 +157,7 @@ public class TheSumOfItsParts {
      * mark available steps:
      */
     private static void recalculateAvailableSteps(Map<String, Step> source) {
-        System.out.println("source to Recalculate= " + source);
+//        System.out.println("source to Recalculate= " + source);
         // add to availabeSteps queue
         for (Step curr : source.values()) {
             if (curr.getPrereqs().size() == 0) {// if no prereqs are present, this step is available for execution
@@ -172,7 +172,7 @@ public class TheSumOfItsParts {
      * mark available steps:
      */
     private static void recalculateAvailableStepsP2(Map<String, Step> source) {
-        System.out.println("source to Recalculate= " + source);
+//        System.out.println("source to Recalculate= " + source);
         // add to availabeSteps queue
         for (Step curr : source.values()) {
             if (curr.getPrereqs().size() == 0 && !availabeSteps.contains(curr)
@@ -200,32 +200,33 @@ public class TheSumOfItsParts {
         orderOfSteps = new StringBuilder();
         int timer = 0;
 
-        for (Step s : allStepsP2.values()) {
-            System.out.println("p2 = " + s);
-        }
+//        for (Step s : allStepsP2.values()) {
+//            System.out.println("p2 = " + s);
+//        }
 
         for (int i = 0; i < NUMBER_OF_WORKERS; i++) {
             myWorkers.add(new Worker());
         }
-        System.out.println("myWorkers = " + myWorkers);
+//        System.out.println("myWorkers = " + myWorkers);
 
         recalculateAvailableStepsP2(allStepsP2);
-        System.out.println("P2 availabeSteps = " + availabeSteps);
+
+//        System.out.println("P2 availabeSteps = " + availabeSteps);
 
         int myDebugLoop = 5;
         while (!jobsDone()) { // we have jobs/steps to do
 //        while (myDebugLoop >= 0) { // we have jobs/steps to do
 
-            System.out.println("\n => Timer = " + timer);
+//            System.out.println("\n => Timer = " + timer);
 
-            System.out.println("-- BEFORE assignment: ");
-            System.out.println("        avail steps = " + availabeSteps);
-            System.out.println("        myWorkers = " + myWorkers);
+//            System.out.println("-- BEFORE assignment: ");
+//            System.out.println("        avail steps = " + availabeSteps);
+//            System.out.println("        myWorkers = " + myWorkers);
 
 
             for (Worker currentWorker : myWorkers) {
 
-                System.out.println("\n  Worker ----> " + currentWorker.getId() + '\n');
+//                System.out.println("\n  Worker ----> " + currentWorker.getId() + '\n');
 
                 if (currentWorker.isFree()) { // if worker is free, assign new available task to him (if any):
 
@@ -234,41 +235,41 @@ public class TheSumOfItsParts {
                         currentWorker.startJob(pickedTask);
                         currentWorker.getTask().queue();
 
-                        System.out.println("       Worker [" + currentWorker + "] \n    " +
-                                "   picked up job [" + currentWorker.getTask() + "]!");
+//                        System.out.println("       Worker [" + currentWorker + "] \n    " +
+//                                "   picked up job [" + currentWorker.getTask() + "]!");
 
                     } else {
-                        System.out.println("    no job for this worker... continue...");
+//                        System.out.println("    no job for this worker... continue...");
                     }
                 } else {
-                    System.out.println(".. this worker is busy... !");
+//                    System.out.println(".. this worker is busy... !");
                 }
-
-                System.out.println("-- AFTER assignment and before working 1 cycle : ");
-                System.out.println("        avail steps = " + availabeSteps);
-                System.out.println("       myWorkers = " + myWorkers);
+//
+//                System.out.println("-- AFTER assignment and before working 1 cycle : ");
+//                System.out.println("        avail steps = " + availabeSteps);
+//                System.out.println("       myWorkers = " + myWorkers);
 
                 // work on the assigned task (if any) for 1 cycle:
                 Step taskBeingExecuted = currentWorker.processJob();
-                System.out.println("    taskBeingExecuted = " + taskBeingExecuted);
+//                System.out.println("    taskBeingExecuted = " + taskBeingExecuted);
 
-                System.out.println("-- AFTER working 1 cycle");
-                System.out.println("       myWorkers = " + myWorkers);
+//                System.out.println("-- AFTER working 1 cycle");
+//                System.out.println("       myWorkers = " + myWorkers);
 
 
                 // if job execution is finished (time spent in queue is enough), mark it as such and remove as prereq from others:
                 if (taskBeingExecuted != null && taskBeingExecuted.isExecuted()) {
-                    System.out.println("  ... completing job... ");
+//                    System.out.println("  ... completing job... => " + taskBeingExecuted);
                     taskBeingExecuted.completeThisJob(allStepsP2);
                 }
 
             }
 
-            System.out.println(" orderOfStepsP2 = [" + orderOfStepsP2 + "]");
+//            System.out.println(" orderOfStepsP2 = [" + orderOfStepsP2 + "]");
 
             // advance the timer
             timer++;
-            System.out.println("... timer advance + 1...");
+//            System.out.println("... timer advance + 1...");
 
 //
             recalculateAvailableStepsP2(allStepsP2);
@@ -276,6 +277,7 @@ public class TheSumOfItsParts {
             myDebugLoop--;
         }
 
+//        System.out.println(" orderOfStepsP2 = [" + orderOfStepsP2 + "]");
 
         System.out.println("\n    Part 2 solution:   Total Time spent to complete all of the steps= " + timer);
     }
