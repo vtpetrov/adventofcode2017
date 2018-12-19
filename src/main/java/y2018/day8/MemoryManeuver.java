@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static helper.InputLoader.*;
 
@@ -17,6 +18,9 @@ public class MemoryManeuver {
     private static int sumOfMetadataEntries;
     private static int sumOfNodeValues;
     private static List<MyNode> nodes;
+    private static String s;
+    private static int parentNodeIndex;
+    private static int recursionCalls = 0;
 
 
     public static void main(String[] args) throws Throwable {
@@ -55,14 +59,15 @@ public class MemoryManeuver {
 
     private static void partOne() {
 
-        solutionP1(getMainIn().nextLine());
+        s = getMainIn().nextLine();
+        solutionP1();
 
 
         System.out.println("\n    Part 1 solutionP1:   the sum of all metadata entries= " + sumOfMetadataEntries);
 
     }
 
-    private static String solutionP1(String s) {
+    private static void solutionP1() {
 
         // read header:
         // - qty of child nodes
@@ -79,7 +84,7 @@ public class MemoryManeuver {
 
         // read nodes
         for (int n = 0; n < quantityOfChildNodes; n++) {
-            s = solutionP1(s);
+            solutionP1();
         }
 
 
@@ -100,27 +105,31 @@ public class MemoryManeuver {
 
         }
 
-        return s;
-
     }
 
     private static void partTwo() {
 
-        solutionP2(getMainIn().nextLine());
+        s = getMainIn().nextLine();
+        solutionP2();
 
         System.out.println("\n    Part 2 solutionP1:   YYYYYYYYYYYY= [");
     }
 
-    private static void solutionP2(String s) {
+    private static void solutionP2() {
 
         nodes = new ArrayList<>();
-        parseDataP2(s, 0, -1);
+
+        parseDataP2(-1);
 
         System.out.println("END nodes = \n" + nodes);
 
     }
 
-    private static String parseDataP2(String s, int nodeIndex, int parentIndex) {
+    private static void parseDataP2(int parentIndex) {
+
+        recursionCalls++;
+        System.out.println("recursionCalls = " + recursionCalls);
+
         // read header:
         // - qty of child nodes
         int toIndex = s.indexOf(" ");
@@ -136,22 +145,25 @@ public class MemoryManeuver {
 
         // add node to list:
         MyNode parentToAdd;
-        if (nodeIndex == 0) {
+        if (nodes.size() == 0) {
             parentToAdd = null; // this is the root
         } else {
             parentToAdd = nodes.get(parentIndex);
         }
-        nodes.add(nodeIndex, new MyNode(nodeIndex, parentToAdd, quantityOfChildNodes, quantityOfMetadataEntries));
+
+        nodes.add(new MyNode(parentToAdd, quantityOfChildNodes, quantityOfMetadataEntries));
+        int indexOfLastAdded = nodes.size() - 1;
+        nodes.get(indexOfLastAdded).setId(indexOfLastAdded);
 
         // read child nodes
         for (int n = 0; n < quantityOfChildNodes; n++) {
-            s = parseDataP2(s, n + 1, nodeIndex);
+            parseDataP2(indexOfLastAdded);
+
         }
 
-
         toIndex = s.indexOf(" ");
-        // read metadata
 
+        // read metadata
         for (int m = 0; m < quantityOfMetadataEntries; m++) {
             int metadataEntry;
             if (toIndex == -1) { // last entry in the sequence/file
@@ -162,11 +174,9 @@ public class MemoryManeuver {
                 toIndex = s.indexOf(" ");
             }
 
-            nodes.get(nodeIndex).getMetadataEntries()[m] = metadataEntry;
+            nodes.get(indexOfLastAdded).getMetadataEntries()[m] = metadataEntry;
 
         }
-
-        return s;
 
     }
 
@@ -176,11 +186,10 @@ public class MemoryManeuver {
 
         int id = -1;
         MyNode parent;
-//        List<MyNode> childNodes;
+        List<MyNode> childNodes;
         int[] metadataEntries;
 
-        MyNode(int id, MyNode parentInput, int numberOfChildren, int numberOfMetadataEntries) {
-            this.id = id;
+        MyNode(MyNode parentInput, int numberOfChildren, int numberOfMetadataEntries) {
 
             if (parentInput != null) {
                 this.parent = parentInput;
@@ -191,14 +200,25 @@ public class MemoryManeuver {
             this.metadataEntries = new int[numberOfMetadataEntries];
         }
 
+        /**
+         * traverse the ready structure and populate children fields
+         */
+        void populateChildren(){
+
+            for(MyNode currentNode : nodes){
+
+            }
+
+        }
+
         @Override
         public String toString() {
             return "MyNode{" +
                     "id=" + id +
-                    ", parent=" + parent +
-//                    ", \n childNodes=" + childNodes +
+                    ", parent=" + (parent == null ? parent : parent.getId()) +
+                    ", childs=" + (childNodes == null ? childNodes : childNodes.stream().map(MyNode::getId).collect(Collectors.toList())) +
                     ", metadataEntries=" + Arrays.toString(metadataEntries) +
-                    "}\n";
+                    "};\n";
         }
     }
 }
