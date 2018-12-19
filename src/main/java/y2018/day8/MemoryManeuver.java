@@ -1,16 +1,23 @@
 package y2018.day8;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-import static helper.InputLoader.closeInput;
-import static helper.InputLoader.getMainIn;
-import static helper.InputLoader.loadInput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import static helper.InputLoader.*;
 
 public class MemoryManeuver {
 
-        private static final String INPUT_FILE_NAME = "year_2018/day8_input.txt";
-//    private static final String INPUT_FILE_NAME = "debug.txt";
+    //    private static final String INPUT_FILE_NAME = "year_2018/day8_input.txt";
+    private static final String INPUT_FILE_NAME = "debug.txt";
     private static int sumOfMetadataEntries;
+    private static int sumOfNodeValues;
+    private static List<MyNode> nodes;
+
 
     public static void main(String[] args) throws Throwable {
         System.out.println("----   ADVENT Of code   2018    ----");
@@ -23,6 +30,7 @@ public class MemoryManeuver {
 
         loadInput(INPUT_FILE_NAME, "");
         partOne();
+        closeInput();
 
 
         long p2Start = new Date().getTime();
@@ -31,8 +39,9 @@ public class MemoryManeuver {
         System.out.println("=========================================================================================");
         System.out.println("\n    ---=== Part 2 ===---     ");
 
-        partTwo();
 
+        loadInput(INPUT_FILE_NAME, "");
+        partTwo();
         closeInput();
 
 
@@ -46,14 +55,14 @@ public class MemoryManeuver {
 
     private static void partOne() {
 
-        parseInputPartOne(getMainIn().nextLine());
+        solutionP1(getMainIn().nextLine());
 
 
-        System.out.println("\n    Part 1 solution:   the sum of all metadata entries= " + sumOfMetadataEntries);
+        System.out.println("\n    Part 1 solutionP1:   the sum of all metadata entries= " + sumOfMetadataEntries);
 
     }
 
-    private static String parseInputPartOne(String s) {
+    private static String solutionP1(String s) {
 
         // read header:
         // - qty of child nodes
@@ -67,11 +76,10 @@ public class MemoryManeuver {
         int quantityOfMetadataEntries = Integer.valueOf(s.substring(0, toIndex));
         // recalc/reposition string and indexes
         s = s.substring(toIndex + 1);
-        toIndex = s.indexOf(" ");
 
         // read nodes
         for (int n = 0; n < quantityOfChildNodes; n++) {
-            s = parseInputPartOne(s);
+            s = solutionP1(s);
         }
 
 
@@ -89,6 +97,7 @@ public class MemoryManeuver {
             }
 
             sumOfMetadataEntries += metadataEntry;
+
         }
 
         return s;
@@ -97,7 +106,99 @@ public class MemoryManeuver {
 
     private static void partTwo() {
 
+        solutionP2(getMainIn().nextLine());
 
-        System.out.println("\n    Part 2 solution:   YYYYYYYYYYYY= [");
+        System.out.println("\n    Part 2 solutionP1:   YYYYYYYYYYYY= [");
+    }
+
+    private static void solutionP2(String s) {
+
+        nodes = new ArrayList<>();
+        parseDataP2(s, 0, -1);
+
+        System.out.println("END nodes = \n" + nodes);
+
+    }
+
+    private static String parseDataP2(String s, int nodeIndex, int parentIndex) {
+        // read header:
+        // - qty of child nodes
+        int toIndex = s.indexOf(" ");
+        int quantityOfChildNodes = Integer.valueOf(s.substring(0, toIndex));
+        // recalc/reposition string and indexes
+        s = s.substring(toIndex + 1);
+        toIndex = s.indexOf(" ");
+
+        // - qty of metadata entries
+        int quantityOfMetadataEntries = Integer.valueOf(s.substring(0, toIndex));
+        // recalc/reposition string and indexes
+        s = s.substring(toIndex + 1);
+
+        // add node to list:
+        MyNode parentToAdd;
+        if (nodeIndex == 0) {
+            parentToAdd = null; // this is the root
+        } else {
+            parentToAdd = nodes.get(parentIndex);
+        }
+        nodes.add(nodeIndex, new MyNode(nodeIndex, parentToAdd, quantityOfChildNodes, quantityOfMetadataEntries));
+
+        // read child nodes
+        for (int n = 0; n < quantityOfChildNodes; n++) {
+            s = parseDataP2(s, n + 1, nodeIndex);
+        }
+
+
+        toIndex = s.indexOf(" ");
+        // read metadata
+
+        for (int m = 0; m < quantityOfMetadataEntries; m++) {
+            int metadataEntry;
+            if (toIndex == -1) { // last entry in the sequence/file
+                metadataEntry = Integer.valueOf(s);
+            } else {
+                metadataEntry = Integer.valueOf(s.substring(0, toIndex));
+                s = s.substring(toIndex + 1);
+                toIndex = s.indexOf(" ");
+            }
+
+            nodes.get(nodeIndex).getMetadataEntries()[m] = metadataEntry;
+
+        }
+
+        return s;
+
+    }
+
+    @Getter
+    @Setter
+    private static class MyNode {
+
+        int id = -1;
+        MyNode parent;
+//        List<MyNode> childNodes;
+        int[] metadataEntries;
+
+        MyNode(int id, MyNode parentInput, int numberOfChildren, int numberOfMetadataEntries) {
+            this.id = id;
+
+            if (parentInput != null) {
+                this.parent = parentInput;
+            }
+
+//            this.childNodes = new ArrayList<>(numberOfChildren);
+
+            this.metadataEntries = new int[numberOfMetadataEntries];
+        }
+
+        @Override
+        public String toString() {
+            return "MyNode{" +
+                    "id=" + id +
+                    ", parent=" + parent +
+//                    ", \n childNodes=" + childNodes +
+                    ", metadataEntries=" + Arrays.toString(metadataEntries) +
+                    "}\n";
+        }
     }
 }
