@@ -75,7 +75,8 @@ public class MarbleMania {
 
             for (int playerIndex = 0; playerIndex < numberOfPlayers && marbleValue < lastMarbleWorths; playerIndex++) {
                 marbleValue++;
-                playTurn(playerIndex, marbleValue);
+//                playTurn(playerIndex, marbleValue);
+                playTurnV2(playerIndex, marbleValue);
 //                System.out.print(".");
 //                System.out.println("    circle = " + circle);
 //                System.out.println("    playersScore = " + Arrays.toString(playersScore));
@@ -137,13 +138,34 @@ public class MarbleMania {
 
     }
 
+    private void playTurnV2(int playerIndex, int marbleValue) {
+
+        if ((marbleValue % 23) != 0) {
+//            System.out.print("rotate -1 : ");
+            Collections.rotate(circle, -1);// set the current marble to last position in list
+            circle.add(marbleValue);
+
+//            System.out.println(circle);
+
+        } else {
+//            System.out.print("take 7th  : ");
+            Collections.rotate(circle, 7);
+            playersScore[playerIndex] += circle.remove(circle.size() - 1) + marbleValue;
+            Collections.rotate(circle, -1);
+
+//            System.out.println(circle);
+        }
+
+
+    }
+
 
     private void partTwo() {
 
         parseInput(); // initializes numberOfPlayers and lastMarbleWorths
         playersScore = new int[numberOfPlayers];
         lastMarbleWorths = lastMarbleWorths * 100;
-        circle = new ArrayList<>();
+        circle = new LinkedList<>();
 
         playTheGame();
 
